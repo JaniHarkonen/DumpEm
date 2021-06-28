@@ -2,13 +2,32 @@ import React from "react";
 import styled from "styled-components";
 import { getComponent, nextKey } from "../Classes";
 import { jTabbedViewer } from "../Jsons";
+import { registerComponent } from "../ComponentRegistry";
+import { SCRIPTS } from "../../EXTERN/Scripts"
 
 export default class TabbedViewer extends React.Component {
     constructor(props) {
         super(props);
 
+            // Copy attributes from the host component, if there are any
         this.state = jTabbedViewer;
         if( props.attributes != null ) this.state = {...this.state, ...props.attributes};
+
+            // Prefix the ID of this component with that of the host
+        if( this.state.hostReference != null ) this.state.id = this.state.hostReference.state.id + "-" + this.state.id;
+
+        registerComponent(this.state.id, this);
+
+
+            // Run initialization script, if it exists
+        if( this.state.scripts.init != null ) SCRIPTS[this.state.scripts.init]();
+    }
+
+        // Returns a reference to a component given its ID
+    getComponentById = (id) => {
+        for( let c of this.state.components ) if( c.attributes.id === id ) return c;
+
+        return null;
     }
 
         // Changes the tab by changing the workspaces that is being rendered

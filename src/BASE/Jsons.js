@@ -17,6 +17,9 @@ export var jBasic =
     "isRendered": false,
     "scripts": {
         "init": null
+    },
+    "variables": {
+        
     }
 };
 

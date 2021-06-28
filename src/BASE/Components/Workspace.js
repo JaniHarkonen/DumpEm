@@ -2,15 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { getComponent } from "../Classes";
 import { jWorkspace } from "../Jsons";
-import { SCRIPTS } from "../../EXTERN/Scripts";
+import { registerComponent } from "../ComponentRegistry";
+import { SCRIPTS } from "../../EXTERN/Scripts"
 
 export default class Workspace extends React.Component {
     constructor(props) {
         super(props);
-        
+        this.state = jWorkspace;
+            // Copy attributes from the host component, if there are any
         this.state = jWorkspace;
         if( props.attributes != null ) this.state = {...this.state, ...props.attributes};
 
+            // Prefix the ID of this component with that of the host
+        if( this.state.hostReference != null ) this.state.id = this.state.hostReference.state.id + "-" + this.state.id;
+
+        registerComponent(this.state.id, this);
+
+
+            // Run initialization script, if it exists
         if( this.state.scripts.init != null ) SCRIPTS[this.state.scripts.init]();
     }
 
@@ -18,9 +27,10 @@ export default class Workspace extends React.Component {
     getComponentById = (id) => {
         for( let c of this.state.components ) if( c.attributes.id === id ) return c;
 
-        console.log("not found");
         return null;
     }
+
+
 
         // Renders all the subcomponents of this workspace
     renderComponents = () => {
@@ -31,8 +41,6 @@ export default class Workspace extends React.Component {
             })
         );
     }
-
-
 
     render() {
         return(
