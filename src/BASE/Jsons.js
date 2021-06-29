@@ -8,19 +8,17 @@
 */
 export var jBasic =
 {
-    "id": "",
-    "class": "",
-    "config": "",
-    "hostComponent": "",
-    "hostReference": null,
-    "this": null,
-    "isRendered": false,
-    "scripts": {
-        "init": null
+    id: "",
+    class: "",
+    config: "",
+    hostComponent: "",
+    hostReference: null,
+    this: null,
+    isRendered: false,
+    scripts: {
+        init: null
     },
-    "variables": {
-        
-    }
+    variables: {}
 };
 
 /*
@@ -30,9 +28,10 @@ export var jBasic =
 export var jWorkspace = 
 {
     ...jBasic,
-    "name": "",
-    "components": [],
-    "options": []
+    class: "workspace",
+    name: "",
+    components: [],
+    options: []
 };
 
 /*
@@ -42,9 +41,10 @@ export var jWorkspace =
 export var jTabbedViewer =
 {
     ...jBasic,
-    "workspaces": [],
-    "activeTab": -1,
-    "options": []
+    class: "viewer-tabbed",
+    workspaces: [],
+    activeTab: -1,
+    options: []
 };
 
 /*
@@ -54,17 +54,19 @@ export var jTabbedViewer =
 export var jSymbolList = 
 {
     ...jBasic,
-    "symbolData": [],
-    "options": []
+    class: "symbol-list",
+    symbolData: [],
+    options: []
 }
 
 /*
-    Properties for Notes.
+    Properties for Note.
     (EXTENDS jBasic)
 */
 export var jNote =
 {
     ...jBasic,
+    class: "note",
     font: "",
     fontSize: -1,
     content: ""

@@ -3,8 +3,18 @@
 
 
  */
+import configuration from "../EXTERN/config.json";
+const fs = window.require("fs");
 
+/*
+    Repository currently being accessed.
+*/
+var REPO_CURRENT = "";
 
+/*
+    Repository that will be brought up upon start.
+*/
+var REPO_STARTUP = configuration.startupRepo;
 
 /*
     Transfers the contents of a given json "json" to the state of a given
@@ -30,7 +40,8 @@ export const jsonToState = (thisref, json) => {
 }
 
 /*
-    Loads a stringified JSON from a .json- file and returns its parsed form.
+    Reads a stringified JSON from a .json- file and returns its parsed form.
+    NOTE: Only works in currently accessed repository.
 
     ARGS:
             path    - Path to the .json- file.
@@ -38,6 +49,78 @@ export const jsonToState = (thisref, json) => {
     RETURNS:
             Parsed JSON.
 */
-export const loadJson = (path) => {
-    
+export const readJson = (path) => {
+    if( path == null ) return {};
+
+    const file = fs.readFileSync(getCurrentRepository() + path);
+    return JSON.parse(file);
+}
+
+/*
+    Writes a stringified JSON to a .json-file. Useful when saving changes to
+    components.
+    NOTE: Only writes files into the currently accessed repository.
+
+    If the file doesn't exist, it will be created.
+
+    Existing files will be overwritten (see modifyJson to prevent overwrite).
+
+    ARGS:
+            path    - Path to the .json- file to write to.
+            json    - JSON to write in the file.
+*/
+export const writeJson = (path, json) => {
+    if( path == null ) return;
+    if( json == null ) return;
+
+    const file = getCurrentRepository() + path;
+    const json_str = JSON.stringify(json, null, 4);
+    fs.writeFileSync(file, json_str);
+}
+
+/*
+    Modifies a given .json-file by concatenating the JSON within with a given
+    JSON.
+
+    ARGS:
+            path    - Path to the .json- file that should be modified.
+            json    - JSON to modify the file with.
+*/
+export const modifyJson = (path, json) => {
+    const read_json = readJson(path);
+    if( read_json == null ) return;
+
+    const mod_json = { ...read_json, ...json };
+    writeJson(path, mod_json);
+}
+
+/*
+    Returns the file path to the repository currently being accessed.
+
+    RETURNS:
+            Path to the repository.
+*/
+export const getCurrentRepository = () => {
+    return REPO_CURRENT;
+}
+
+/*
+    Sets the file path to the repository currently being accessed.
+
+    ARGS:
+            path    - Path to the repository.
+*/
+export const setCurrentRepository = (path) => {
+    REPO_CURRENT = path;
+}
+
+/*
+    Returns the file path to the repository that will be brought up
+    upon start.
+
+    RETURNS:
+            Path to the repository.
+*/
+export const getStartupRepository = () => {
+    return REPO_STARTUP;
 }

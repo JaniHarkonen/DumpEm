@@ -1,13 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import { jNote } from "../Jsons";
+import { readJson, writeJson } from "../Helpers";
+import { registerComponent } from "../ComponentRegistry";
+import { SCRIPTS } from "../../EXTERN/Scripts";
 
 export default class Note extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = jNote;
-        if( props.attributes != null ) this.state = { ...this.state, ...props.attributes };
+        if( props.attributes != null )
+        {
+            this.state = { ...this.state, ...readJson(props.attributes.config).attributes, ...props.attributes }
+        }
+
+            // Prefix the ID of this component with that of the host
+        if( this.state.hostReference != null ) this.state.id = this.state.hostReference.state.id + "-" + this.state.id;
+
+        registerComponent(this.state.id, this);
+
+
+            // Run initialization script, if it exists
+        if( this.state.scripts.init != null ) SCRIPTS[this.state.scripts.init]();
     }
 
         // Updates the content of the note based on input
@@ -17,7 +32,20 @@ export default class Note extends React.Component {
 
         // Stores the potentially updated input of the note in its host component
     componentWillUnmount() {
+        if( this.state.config == null ) return;
+        if( this.state.config === "" ) return;
 
+        writeJson(this.state.config, {
+            class: this.state.class,
+            attributes: {
+                id: this.state.id,
+                isRendered: this.state.isRendered,
+                hostComponent: this.state.hostComponent,
+                font: this.state.font,
+                fontSize: this.state.fontSize,
+                content: this.state.content
+            }
+        })
     }
 
     render() {

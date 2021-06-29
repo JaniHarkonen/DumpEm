@@ -1,12 +1,14 @@
 import Workspace from "./BASE/Components/Workspace";
-import { jROOT } from "./BASE/TestData";
+import { getStartupRepository, setCurrentRepository } from "./BASE/Helpers";
 
 function App() {
-  return (
+    setCurrentRepository(getStartupRepository());
+
+    return (
     <div className="App">
-      <Workspace attributes={jROOT} />
+        <Workspace attributes={{config: ".config.json"}} />
     </div>
-  );
+    );
 }
 
 export default App;

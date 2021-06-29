@@ -4,6 +4,7 @@ import { getComponent, nextKey } from "../Classes";
 import { jTabbedViewer } from "../Jsons";
 import { registerComponent } from "../ComponentRegistry";
 import { SCRIPTS } from "../../EXTERN/Scripts"
+import { readJson } from "../Helpers";
 
 export default class TabbedViewer extends React.Component {
     constructor(props) {
@@ -11,7 +12,10 @@ export default class TabbedViewer extends React.Component {
 
             // Copy attributes from the host component, if there are any
         this.state = jTabbedViewer;
-        if( props.attributes != null ) this.state = {...this.state, ...props.attributes};
+        if( props.attributes != null )
+        {
+            this.state = { ...this.state, ...readJson(props.attributes.config).attributes, ...props.attributes }
+        }
 
             // Prefix the ID of this component with that of the host
         if( this.state.hostReference != null ) this.state.id = this.state.hostReference.state.id + "-" + this.state.id;
@@ -22,6 +26,7 @@ export default class TabbedViewer extends React.Component {
             // Run initialization script, if it exists
         if( this.state.scripts.init != null ) SCRIPTS[this.state.scripts.init]();
     }
+    
 
         // Returns a reference to a component given its ID
     getComponentById = (id) => {
@@ -39,7 +44,8 @@ export default class TabbedViewer extends React.Component {
     renderLabels = () => {
         return(this.state.workspaces.map((ws, index) => {
             let ws_comp = this.state.hostReference.getComponentById(ws);
-            if( ws_comp == null ) return;
+            if( ws_comp == null ) return "";
+
             let ws_name = ws_comp.attributes.name;
             
             return(
@@ -72,8 +78,8 @@ export default class TabbedViewer extends React.Component {
             {
                 this.state.isRendered &&
                 <Content id={this.state.id}>
-                    {this.renderLabels()}
                     {this.renderActiveTab()}
+                    {this.renderLabels()}
                 </Content>
             }
             </>

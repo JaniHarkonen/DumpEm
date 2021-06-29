@@ -5,6 +5,7 @@ import { jSymbolList } from "../Jsons";
 import SymbolElement from "./SymbolList/SymbolElement";
 import { registerComponent } from "../ComponentRegistry";
 import { SCRIPTS } from "../../EXTERN/Scripts"
+import { readJson } from "../Helpers";
 
 export default class SymbolList extends React.Component {
     constructor(props) {
@@ -12,7 +13,10 @@ export default class SymbolList extends React.Component {
         
             // Copy attributes from the host component, if there are any
         this.state = jSymbolList;
-        if( props.attributes != null ) this.state = {...this.state, ...props.attributes};
+        if( props.attributes != null )
+        {
+            this.state = { ...this.state, ...readJson(props.attributes.config).attributes, ...props.attributes }
+        }
 
             // Prefix the ID of this component with that of the host
         if( this.state.hostReference != null ) this.state.id = this.state.hostReference.state.id + "-" + this.state.id;

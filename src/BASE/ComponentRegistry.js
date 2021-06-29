@@ -21,7 +21,7 @@ var REGISTRY = {};
             thisref - Reference to the instance of the component.
 */
 export const registerComponent = (id, thisref) => {
-    if( id == null || id == "" ) return;
+    if( id == null || id === "" ) return;
     if( thisref == null ) return;
 
     REGISTRY[id] = thisref;
@@ -40,7 +40,7 @@ export const registerComponent = (id, thisref) => {
             Undefined if no such component exists.
 */
 export const getComponentById = (id) => {
-    if( id == null || id == "" ) return;
+    if( id == null || id === "" ) return;
 
     return REGISTRY[id];
 }
