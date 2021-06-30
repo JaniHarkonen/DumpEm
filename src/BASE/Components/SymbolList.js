@@ -3,36 +3,14 @@ import styled from "styled-components";
 import { nextKey } from "../Classes";
 import { jSymbolList } from "../Jsons";
 import SymbolElement from "./SymbolList/SymbolElement";
-import { registerComponent } from "../ComponentRegistry";
+/*import { registerComponent } from "../ComponentRegistry";
 import { SCRIPTS } from "../../EXTERN/Scripts"
-import { readJson } from "../Helpers";
+import { readJson } from "../Helpers";*/
+import BaseComponent from "./BaseComponent";
 
-export default class SymbolList extends React.Component {
+export default class SymbolList extends BaseComponent {
     constructor(props) {
-        super(props);
-        
-            // Copy attributes from the host component, if there are any
-        this.state = jSymbolList;
-        if( props.attributes != null )
-        {
-            this.state = { ...this.state, ...readJson(props.attributes.config).attributes, ...props.attributes }
-        }
-
-            // Prefix the ID of this component with that of the host
-        if( this.state.hostReference != null ) this.state.id = this.state.hostReference.state.id + "-" + this.state.id;
-
-        registerComponent(this.state.id, this);
-
-
-            // Run initialization script, if it exists
-        if( this.state.scripts.init != null ) SCRIPTS[this.state.scripts.init]();
-    }
-
-        // Returns a reference to a component given its ID
-    getComponentById = (id) => {
-        for( let c of this.state.components ) if( c.attributes.id === id ) return c;
-
-        return null;
+        super(props, jSymbolList);
     }
 
         // Renders all the symbols provided to this symbol list.

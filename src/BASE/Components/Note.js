@@ -1,28 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { jNote } from "../Jsons";
-import { readJson, writeJson } from "../Helpers";
-import { registerComponent } from "../ComponentRegistry";
-import { SCRIPTS } from "../../EXTERN/Scripts";
+import { writeJson } from "../Helpers";
+/*import { registerComponent } from "../ComponentRegistry";
+import { SCRIPTS } from "../../EXTERN/Scripts";*/
+import BaseComponent from "./BaseComponent";
 
-export default class Note extends React.Component {
+export default class Note extends BaseComponent {
     constructor(props) {
-        super(props);
-
-        this.state = jNote;
-        if( props.attributes != null )
-        {
-            this.state = { ...this.state, ...readJson(props.attributes.config).attributes, ...props.attributes }
-        }
-
-            // Prefix the ID of this component with that of the host
-        if( this.state.hostReference != null ) this.state.id = this.state.hostReference.state.id + "-" + this.state.id;
-
-        registerComponent(this.state.id, this);
-
-
-            // Run initialization script, if it exists
-        if( this.state.scripts.init != null ) SCRIPTS[this.state.scripts.init]();
+        super(props, jNote);
     }
 
         // Updates the content of the note based on input

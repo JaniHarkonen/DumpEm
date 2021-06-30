@@ -6,7 +6,7 @@ function App() {
 
     return (
     <div className="App">
-        <Workspace attributes={{config: ".config.json"}} />
+        <Workspace attributes={{config: ".init.json"}} />
     </div>
     );
 }
