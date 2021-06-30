@@ -1,3 +1,4 @@
+# TASK LIST
 ## TO DO
 - [x] create base component
 - [ ] variables
@@ -11,3 +12,6 @@
 
 + visual design
 + create more basic components
+
+# CHANGE LOG
+
