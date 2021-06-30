@@ -38,7 +38,6 @@ export default class Note extends React.Component {
         writeJson(this.state.config, {
             class: this.state.class,
             attributes: {
-                id: this.state.id,
                 isRendered: this.state.isRendered,
                 hostComponent: this.state.hostComponent,
                 font: this.state.font,
