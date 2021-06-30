@@ -1,11 +1,11 @@
 ## TO DO
-- [x] create general component
-- variables
-- variables in attributes
-- running scripts in attributes
-- determine which fields are saved (save groups?)
-- adding/removing components 
-- changing repository
+- [ ] create general component
+- [ ] variables
+- [ ] variables in attributes
+- [ ] running scripts in attributes
+- [ ] determine which fields are saved (save groups?)
+- [ ] adding/removing components 
+- [ ] changing repository
 
 ##
 
