@@ -12,6 +12,9 @@
 
 + visual design
 + create more basic components
-
+<br>
 # CHANGE LOG
 
+## Wednessday 30.6.2021
+First log entry. Added a base component which all other components must now extend.
+The base component is to contain basic functions and properties that should be included in each DumpEm-component.
