@@ -7,5 +7,7 @@
 - adding/removing components 
 - changing repository
 
+##
+
 + visual design
 + create more basic components
