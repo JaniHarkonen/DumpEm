@@ -12,7 +12,8 @@
 
 + visual design
 + create more basic components
-<br/>
+<br></br>
+<br></br>
 # CHANGE LOG
 
 ## Wednessday 30.6.2021
