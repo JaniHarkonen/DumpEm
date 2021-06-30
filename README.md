@@ -7,7 +7,7 @@
 - [ ] adding/removing components 
 - [ ] changing repository
 
-##
+## TO BE TO-DO'D
 
 + visual design
 + create more basic components
