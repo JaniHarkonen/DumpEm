@@ -1,5 +1,5 @@
 ## TO DO
-- [ ] create general component
+- [x] create general component
 - variables
 - variables in attributes
 - running scripts in attributes
