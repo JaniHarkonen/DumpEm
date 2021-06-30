@@ -1,5 +1,5 @@
 ## TO DO
-- [ ] create base component
+- [x] create base component
 - [ ] variables
 - [ ] variables in attributes
 - [ ] running scripts in attributes
