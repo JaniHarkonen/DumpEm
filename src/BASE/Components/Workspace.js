@@ -2,9 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { getComponent } from "../Classes";
 import { jWorkspace } from "../Jsons";
-/*import { registerComponent } from "../ComponentRegistry";
-import { SCRIPTS } from "../../EXTERN/Scripts"
-import { readJson } from "../Helpers";*/
 import BaseComponent from "./BaseComponent";
 
 export default class Workspace extends BaseComponent {

@@ -18,7 +18,9 @@ export var jBasic =
     scripts: {
         init: null
     },
-    variables: {}
+    variables: {
+        
+    }
 };
 
 /*

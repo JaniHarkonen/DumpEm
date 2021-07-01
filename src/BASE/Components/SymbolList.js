@@ -3,9 +3,6 @@ import styled from "styled-components";
 import { nextKey } from "../Classes";
 import { jSymbolList } from "../Jsons";
 import SymbolElement from "./SymbolList/SymbolElement";
-/*import { registerComponent } from "../ComponentRegistry";
-import { SCRIPTS } from "../../EXTERN/Scripts"
-import { readJson } from "../Helpers";*/
 import BaseComponent from "./BaseComponent";
 
 export default class SymbolList extends BaseComponent {

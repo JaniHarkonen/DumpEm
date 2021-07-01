@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { jNote } from "../Jsons";
 import { writeJson } from "../Helpers";
-/*import { registerComponent } from "../ComponentRegistry";
-import { SCRIPTS } from "../../EXTERN/Scripts";*/
 import BaseComponent from "./BaseComponent";
 
 export default class Note extends BaseComponent {
