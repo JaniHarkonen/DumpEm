@@ -59,7 +59,7 @@ export var jSymbolList =
     class: "symbol-list",
     symbolData: [],
     options: []
-}
+};
 
 /*
     Properties for Note.
@@ -72,4 +72,19 @@ export var jNote =
     font: "",
     fontSize: -1,
     content: ""
-}
+};
+
+/*
+    Properties for FileExplorer.
+    (EXTENDS jBasic)
+*/
+export var jFileExplorer =
+{
+    ...jBasic,
+    class: "file-explorer",
+    defaultFolder: "",
+    currentFolder: "",
+    rootFolder: "",
+    itemTypes: ["FOLDER", "FILE"],
+    options: []
+};

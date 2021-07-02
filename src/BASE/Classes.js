@@ -9,6 +9,7 @@ import TabbedViewer from "./Components/TabbedViewer";
 import Note from "./Components/Note";
 
 import TestComponent from "./Components/TestComps/TestComponent";
+import FileExplorer from "./Components/FileExplorer";
 
 
 /*
@@ -61,6 +62,7 @@ export function getComponent(classname, attrib) {
         case "symbol-list": return makeComponent(SymbolList, attrib);
         case "viewer-tabbed": return makeComponent(TabbedViewer, attrib);
         case "note": return makeComponent(Note, attrib);
+        case "file-explorer": return makeComponent(FileExplorer, attrib);
 
         case "test-class": return makeComponent(TestComponent, attrib);
         default: return null;
