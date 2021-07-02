@@ -1,12 +1,7 @@
 # TASK LIST
 ## TO DO
-- [x] create base component
-- [x] variables
-- [x] variables in attributes
-- [x] running scripts in attributes
 - [ ] determine which fields are saved (save groups?)
-- [ ] adding/removing components 
-- [x] changing repository
+- [ ] adding/removing components
 
 ## TO BE TO-DO'D
 
