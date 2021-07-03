@@ -36,7 +36,7 @@ component reasonably to the initial workspace/repo.
 ## Saturday 3.7.2021
 Added the saving of attributes to the configuration file of a component. Programmers can now assign "save groups"
 which can will be used when saving upon an event. For example: <br></br>
-```javascrtip
+```javascript
 "savedFields": {
     "onUnmount": ["content", "fontSize"]
 }
