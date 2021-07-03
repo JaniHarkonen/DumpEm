@@ -1,6 +1,6 @@
 # TASK LIST
 ## TO DO
-- [ ] determine which fields are saved (save groups?)
+- [x] determine which fields are saved (save groups?)
 - [ ] adding/removing components
 
 ## TO BE TO-DO'D
@@ -33,3 +33,13 @@ component reasonably to the initial workspace/repo.
 <br></br>
 <br></br>
 
+## Saturday 3.7.2021
+Added the saving of attributes to the configuration file of a component. Programmers can now assign "save groups"
+which can will be used when saving upon an event. For example: <br></br>
+"savedFields": {
+    "onUnmount": ["content", "fontSize"]
+}
+<br></br>
+will save the "content" and "fontSize" attributes of a component once it's unmounted by React.
+<br></br>
+<br></br>

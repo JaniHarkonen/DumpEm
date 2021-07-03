@@ -7,8 +7,7 @@ export default class DeleteOption extends React.Component {
     }
 
     handleClick = () => {
-        //this.props.hostReference.deleteThis();
-        console.log(this.props.hostReference.state)
+        
     }
 
     render() {

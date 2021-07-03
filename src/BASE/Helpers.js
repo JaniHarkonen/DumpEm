@@ -87,10 +87,11 @@ export const writeJson = (path, json) => {
             json    - JSON to modify the file with.
 */
 export const modifyJson = (path, json) => {
-    const read_json = readJson(path);
+    let read_json = readJson(path);
     if( read_json == null ) return;
 
-    const mod_json = { ...read_json, ...json };
+    let mod_attribs = { ...read_json.attributes, ...json };
+    let mod_json = { ...read_json, ...{attributes: mod_attribs} };
     writeJson(path, mod_json);
 }
 

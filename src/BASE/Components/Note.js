@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { jNote } from "../Jsons";
-import { writeJson } from "../Helpers";
 import BaseComponent from "./BaseComponent";
 
 export default class Note extends BaseComponent {
@@ -16,19 +15,8 @@ export default class Note extends BaseComponent {
 
         // Stores the potentially updated input of the note in its host component
     componentWillUnmount() {
-        if( this.state.config == null ) return;
-        if( this.state.config === "" ) return;
-
-        writeJson(this.state.config, {
-            class: this.state.class,
-            attributes: {
-                isRendered: this.state.isRendered,
-                hostComponent: this.state.hostComponent,
-                font: this.state.font,
-                fontSize: this.state.fontSize,
-                content: this.state.content
-            }
-        })
+        super.componentWillUnmount();
+        this.saveConfiguration("onUnmount");
     }
 
     render() {

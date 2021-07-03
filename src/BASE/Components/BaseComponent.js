@@ -1,7 +1,7 @@
 import React from "react";
-import { readJson } from "../Helpers";
+import { modifyJson, readJson, writeJson } from "../Helpers";
 import { registerComponent } from "../ComponentRegistry";
-import { runScript, SCRIPTS } from "../../EXTERN/Scripts";
+import { runScript as Scripts_runScript, SCRIPTS } from "../../EXTERN/Scripts";
 
 export default class BaseComponent extends React.Component {
     constructor(props, skeleton) {
@@ -13,7 +13,7 @@ export default class BaseComponent extends React.Component {
         this.state = skeleton;
         if( props.attributes != null )
         {
-            this.state = { ...this.state, ...readJson(props.attributes.config).attributes, ...props.attributes }
+            this.state = { ...this.state, ...readJson(this.getModifiedState(props.attributes.config)).attributes, ...props.attributes }
         }
 
             // Prefix the ID of this component with that of the host
@@ -23,7 +23,18 @@ export default class BaseComponent extends React.Component {
 
 
             // Run initialization script, if it exists
-        if( this.state.scripts.init != null ) SCRIPTS[this.state.scripts.init]();
+        this.runComponentScript("init");
+        //if( this.state.scripts.init != null ) SCRIPTS[this.getModifiedState(this.state.scripts.init)]();
+    }
+
+        // Calls a script after mounting, if it exists
+    componentDidMount() {
+        this.runComponentScript("afterMount");
+    }
+
+        // Calls a script upon unmounting, if it exists
+    componentWillUnmount() {
+        this.runComponentScript("onUnmount");
     }
 
         /*
@@ -54,8 +65,8 @@ export default class BaseComponent extends React.Component {
         let id_script = "#SCRIPT:"
         while( attrib.includes(id_script) )
         {
-            let mega = attrib.split(id_script);
-            attrib = attrib.replaceAll(id_script + mega[1], runScript(mega[1]));
+            let scr_str = attrib.split(id_script);
+            attrib = attrib.replaceAll(id_script + scr_str[1], Scripts_runScript(scr_str[1]));
         }
 
         return attrib;
@@ -82,5 +93,34 @@ export default class BaseComponent extends React.Component {
         */
     getModifiedState = (p) => {
         return BaseComponent.interpret(this.state.variables, p);
+    }
+
+        // Runs a script assigned to this component
+    runComponentScript = (scr) => {
+        if( scr == null ) return;
+
+        let script = this.state.scripts[scr];
+        if( script == null || script === "" ) return;
+
+        SCRIPTS[this.getModifiedState(script)]();
+    }
+
+        // Saves the attributes of the component to its config file
+    saveConfiguration = (save_event) => {
+        let config = this.getModifiedState(this.state.config);
+        if( config == null || config === "" ) return;
+        if( save_event == null || save_event === "" ) return;
+        let fields = this.state.savedFields[save_event];
+        if( fields == null || fields.length <= 0 ) return;
+
+        
+        let fields_c = {};
+        for( let field of fields )
+        {
+            let state = this.state[field];
+            fields_c[field] = state ? state : null;
+        }
+
+        modifyJson(config, fields_c);
     }
 }

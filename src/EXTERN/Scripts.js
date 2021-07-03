@@ -11,11 +11,11 @@
 export var SCRIPTS = {};
 
 /*
-    Runs a script with given arguments.
+    Runs a script with given arguments (the arguments are expected to be
+    bundled with "scr_str").
 
     ARGS:
-        script  - Name of the script to execute.
-        args    - String containing the arguments in a non-parsed form.
+        scr_str  - Name of the script to execute.
 */
 export const runScript = (scr_str) => {
     if( scr_str == null ) return;
@@ -29,5 +29,5 @@ export const runScript = (scr_str) => {
     Test script.
 */
 SCRIPTS.testInit = () => {
-    console.log("INIT");
+    console.log("XDXDDDDD");
 }

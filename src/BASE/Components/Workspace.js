@@ -3,12 +3,28 @@ import styled from "styled-components";
 import { getComponent } from "../Classes";
 import { jWorkspace } from "../Jsons";
 import BaseComponent from "./BaseComponent";
+import DeleteOption from "./Options/DeleteOption";
 
 export default class Workspace extends BaseComponent {
     constructor(props) {
         super(props, jWorkspace);
     }
 
+        // Renders all available options for this component
+    renderOptions = () => {
+        let opts = this.state.options;
+        if( opts.length <= 0 ) return <></>;
+        return(
+            <>
+                {
+                    this.isOptionChecked("delete") &&
+                    <DeleteOptionContainer>
+                        <DeleteOption />
+                    </DeleteOptionContainer>
+                }
+            </>
+        )
+    }
 
         // Renders all the subcomponents of this workspace
     renderComponents = () => {
@@ -27,9 +43,9 @@ export default class Workspace extends BaseComponent {
             <>
                 {
                     this.state.isRendered &&
-
                     <Content id={this.state.id}>
                         {this.renderComponents()}
+                        {this.renderOptions()}
                     </Content>
                 }
             </>
@@ -37,7 +53,7 @@ export default class Workspace extends BaseComponent {
     }
 }
 
-/*const DeleteOptionContainer = styled.div`
+const DeleteOptionContainer = styled.div`
     position: absolute;
     right: 58px;
     top: 5px;
@@ -51,7 +67,7 @@ const AddOptionContainer = styled.div`
     top: 5px;
     width: 48px;
     height: 32px;
-`;*/
+`;
 
 const Content = styled.div`
     position: absolute;
