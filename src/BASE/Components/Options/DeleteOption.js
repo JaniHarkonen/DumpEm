@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 export default class DeleteOption extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleClick = () => {
-        
+        //console.log(this.props.hostReference.state.id);
+        //console.log(this.props.hostReference.state.hostReference.getComponentById(this.props.hostReference.state.id));
+        let id = this.props.hostReference.state.id;
+        id = id.substring(id.lastIndexOf("-") + 1, id.length);
+        //console.log(id)
+        this.props.hostReference.state.hostReference.removeComponent(id);
     }
 
     render() {

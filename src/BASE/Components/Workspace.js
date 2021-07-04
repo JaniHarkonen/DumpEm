@@ -4,6 +4,7 @@ import { getComponent } from "../Classes";
 import { jWorkspace } from "../Jsons";
 import BaseComponent from "./BaseComponent";
 import DeleteOption from "./Options/DeleteOption";
+import AddOption from "./Options/AddOption";
 
 export default class Workspace extends BaseComponent {
     constructor(props) {
@@ -19,8 +20,14 @@ export default class Workspace extends BaseComponent {
                 {
                     this.isOptionChecked("delete") &&
                     <DeleteOptionContainer>
-                        <DeleteOption />
+                        <DeleteOption hostReference={this} />
                     </DeleteOptionContainer>
+                }
+                {
+                    this.isOptionChecked("add") &&
+                    <AddOptionContainer>
+                        <AddOption hostReference={this} />
+                    </AddOptionContainer>
                 }
             </>
         )

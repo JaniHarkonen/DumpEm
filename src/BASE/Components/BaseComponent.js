@@ -1,5 +1,5 @@
 import React from "react";
-import { modifyJson, readJson, writeJson } from "../Helpers";
+import { modifyJson, readJson } from "../Helpers";
 import { registerComponent } from "../ComponentRegistry";
 import { runScript as Scripts_runScript, SCRIPTS } from "../../EXTERN/Scripts";
 
@@ -24,7 +24,6 @@ export default class BaseComponent extends React.Component {
 
             // Run initialization script, if it exists
         this.runComponentScript("init");
-        //if( this.state.scripts.init != null ) SCRIPTS[this.getModifiedState(this.state.scripts.init)]();
     }
 
         // Calls a script after mounting, if it exists
@@ -122,5 +121,16 @@ export default class BaseComponent extends React.Component {
         }
 
         modifyJson(config, fields_c);
+    }
+
+        // Removes a sub-component with a given ID from the "components"-array
+    removeComponent = (id) => {
+        this.setState({components: this.state.components.filter((comp) => comp.attributes.id !== id)})
+    }
+    
+        // Adds a given sub-component to the "components"-array
+    addComponent = (comp) => {
+        console.log(comp)
+        this.setState({components: this.state.components.concat(comp)});
     }
 }

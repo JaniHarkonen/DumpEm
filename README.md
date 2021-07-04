@@ -45,3 +45,7 @@ which can will be used when saving upon an event. For example: <br></br>
 will save the "content" and "fontSize" attributes of a component once it's unmounted by React.
 <br></br>
 <br></br>
+
+## Sunday 4.7.2021
+It is now possible to add and remove sub-components. However, this functionality has to be substantially developed
+later on.

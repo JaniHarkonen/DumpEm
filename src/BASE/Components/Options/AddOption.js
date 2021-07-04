@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { printReferences } from "../../ComponentManager";
 
 export default class AddOption extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleClick() {
         //printReferences();
@@ -13,7 +9,18 @@ export default class AddOption extends React.Component {
         let name = prompt("give name: ", "Workspace 2022-0");
         let id = prompt("give id:", "idid");
         this.props.addComponent({class: classname, attributes: {name: name, id: id}});*/
-        console.log(this.props.hostReference.state)
+        //console.log(this.props.hostReference.state);
+        
+        let id = "idid";//prompt("ID of the component: ", "idid");
+        let classname = "symbol-list";//prompt("Which component", "symbol-list");
+        let comp = {
+            class: classname,
+            attributes: {
+                id: id,
+                isRendered: true
+            }
+        }
+        this.props.hostReference.addComponent(comp);
     }
 
     render() {

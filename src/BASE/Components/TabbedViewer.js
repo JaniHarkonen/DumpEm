@@ -39,9 +39,20 @@ export default class TabbedViewer extends BaseComponent {
 
         // Renders the workspace active in the currently displayed tab
     renderActiveTab = () => {
+        if( this.state.activeTab < 0 ) return;
+
         let id = this.state.workspaces[this.state.activeTab];
         let comp = this.state.hostReference.getComponentById(id);
+
+        if( comp != null )
         return getComponent("workspace", {...comp.attributes, hostReference: this.state.hostReference});
+        else
+        {
+            this.setState({
+                workspaces: this.state.workspaces.filter((ws) => ws !== id),
+                activeTab: (this.state.workspaces.length < 1) ? -1 : 0
+            });
+        }
     }
 
 
