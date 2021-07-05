@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { nextKey } from "../Classes";
 import { jSymbolList } from "../Jsons";
 import SymbolElement from "./SymbolList/SymbolElement";
-import BaseComponent from "./BaseComponent";
+import ManifestComponent from "../general/ManifestComponent";
 
-export default class SymbolList extends BaseComponent {
+export default class SymbolList extends ManifestComponent {
     constructor(props) {
         super(props, jSymbolList);
     }

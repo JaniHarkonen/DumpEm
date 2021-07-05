@@ -50,6 +50,22 @@ export var jHasOptions = { options: [] }
 export var jHasComponents = { components: [] }
 
 /*
+    A component with dimensions.
+*/
+export var jHasDimensions = 
+{
+    position: { 
+        x: 0,
+        y: 0
+    },
+
+    dimensions: {
+        width: 0,
+        height: 0
+    }
+}
+
+/*
     Properties for workspace.
     (EXTENDS jBasic)
  */
@@ -70,6 +86,7 @@ export var jTabbedViewer =
 {
     ...jBasic,
     ...jHasOptions,             // Array of strings representing options that are enabled for the user
+    ...jHasDimensions,          // The dimensions and the position of the viewer
     class: "viewer-tabbed",
     workspaces: [],             // Unique identifiers of the workspaces tabbed within this viewer
     activeTab: -1,              // The index of the tab currently being displayed
@@ -83,6 +100,7 @@ export var jSymbolList =
 {
     ...jBasic,
     ...jHasOptions,         // Array of strings representing options that are enabled for the user
+    ...jHasDimensions,      // The position and the dimensions of the list
     class: "symbol-list",
     symbolData: [],         // Ticker data assigned to the symbols displayed on this list
 };
@@ -94,6 +112,7 @@ export var jSymbolList =
 export var jNote =
 {
     ...jBasic,
+    ...jHasDimensions,      // The position and the dimensions fo the note
     class: "note",
     font: "",               // Name of the font family the note text will be drawn in
     fontSize: -1,           // Height of the font in pixels
@@ -108,6 +127,7 @@ export var jFileExplorer =
 {
     ...jBasic,
     ...jHasOptions,                     // Array of strings representing options that are enabled for the user
+    ...jHasDimensions,                  // The position and the dimensions of the explorer window
     class: "file-explorer",
     defaultFolder: "",                  // Folder that will be opened by default
     currentFolder: "",                  // Folder the explorer is currently displaying

@@ -78,13 +78,6 @@ export default class BaseComponent extends React.Component {
         return null;
     }
 
-        // Returns whether an option has been checked in the options-array (the array
-        // contains an entry for it), if the array exists
-    isOptionChecked = (opt) => {
-        if( this.state.options == null ) return false;
-        return this.state.options.includes(opt);
-    }
-
         /* 
             Returns a property of the state of this component but passing it through a
             DumpEm interpreter first and making all necessary adjustments (replacements

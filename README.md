@@ -1,12 +1,13 @@
 # TASK LIST
 ## TO DO
-- [x] determine which fields are saved (save groups?)
-- [ ] adding/removing components
+- [ ] ability to move components
+- [ ] ability to resize components
+- [ ] determine what components should be created
+- [ ] improve existing components
 
 ## TO BE TO-DO'D
-
++ create more abstraction for components
 + visual design
-+ create more basic components
 <br></br>
 <br></br>
 

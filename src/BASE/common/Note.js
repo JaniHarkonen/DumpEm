@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { jNote } from "../Jsons";
-import BaseComponent from "./BaseComponent";
+import ManifestComponent from "../general/ManifestComponent";
 
-export default class Note extends BaseComponent {
+export default class Note extends ManifestComponent {
     constructor(props) {
         super(props, jNote);
     }

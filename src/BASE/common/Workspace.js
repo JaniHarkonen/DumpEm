@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { getComponent } from "../Classes";
 import { jWorkspace } from "../Jsons";
-import BaseComponent from "./BaseComponent";
-import DeleteOption from "./Options/DeleteOption";
-import AddOption from "./Options/AddOption";
+import DeleteOption from "../general/Options/DeleteOption";
+import AddOption from "../general/Options/AddOption";
+import ManifestComponent from "../general/ManifestComponent";
 
-export default class Workspace extends BaseComponent {
+export default class Workspace extends ManifestComponent {
     constructor(props) {
         super(props, jWorkspace);
     }

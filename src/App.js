@@ -1,4 +1,4 @@
-import Workspace from "./BASE/Components/Workspace";
+import Workspace from "./BASE/common/Workspace";
 import { getStartupRepository, setCurrentRepository } from "./BASE/Helpers";
 
 function App() {

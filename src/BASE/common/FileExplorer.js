@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { jFileExplorer } from "../Jsons";
-import BaseComponent from "./BaseComponent";
+import ManifestComponent from "../general/ManifestComponent";
 
 const { exec } = window.require("child_process");
 const fs = window.require("fs");
 const pathModule = window.require("path");
 
-export default class FileExplorer extends BaseComponent {
+export default class FileExplorer extends ManifestComponent {
     constructor(props) {
         super(props, jFileExplorer);
         
