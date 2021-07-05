@@ -50,3 +50,17 @@ will save the "content" and "fontSize" attributes of a component once it's unmou
 ## Sunday 4.7.2021
 It is now possible to add and remove sub-components. However, this functionality has to be substantially developed
 later on.
+
+## Monday 5.7.2021
+Did some refactoring creating a folder for "general" components, which are the parent components each DumpEm-
+component should inherit from, and "common" components, which should components frequently used across different
+repositories.<br></br>
+´´´javascript
+ManifestComponent
+´´´
+was also created, which is designed to be the parent for all components that have a visual manifestation in the
+workspace. From this point on, components without a visual manifestation should not have the
+´´´javascript
+options
+´´´
+attribute, as in order to bring up the options screen, the user has to click on a manifestation first.
