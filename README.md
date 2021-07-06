@@ -59,8 +59,5 @@ repositories.<br></br>
 ManifestComponent
 ```
 was also created, which is designed to be the parent for all components that have a visual manifestation in the
-workspace. From this point on, components without a visual manifestation should not have the
-```javascript
-options
-```
-attribute, as in order to bring up the options screen, the user has to click on a manifestation first.
+workspace. From this point on, components without a visual manifestation should not have the "options" attribute,
+as in order to bring up the options screen, the user has to click on a manifestation first.
