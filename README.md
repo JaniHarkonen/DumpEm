@@ -55,12 +55,12 @@ later on.
 Did some refactoring creating a folder for "general" components, which are the parent components each DumpEm-
 component should inherit from, and "common" components, which should components frequently used across different
 repositories.<br></br>
-´´´javascript
+```javascript
 ManifestComponent
-´´´
+```
 was also created, which is designed to be the parent for all components that have a visual manifestation in the
 workspace. From this point on, components without a visual manifestation should not have the
-´´´javascript
+```javascript
 options
-´´´
+```
 attribute, as in order to bring up the options screen, the user has to click on a manifestation first.
