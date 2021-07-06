@@ -50,6 +50,8 @@ will save the "content" and "fontSize" attributes of a component once it's unmou
 ## Sunday 4.7.2021
 It is now possible to add and remove sub-components. However, this functionality has to be substantially developed
 later on.
+<br></br>
+<br></br>
 
 ## Monday 5.7.2021
 Did some refactoring creating a folder for "general" components, which are the parent components each DumpEm-
