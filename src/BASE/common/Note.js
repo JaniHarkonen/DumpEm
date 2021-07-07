@@ -44,9 +44,9 @@ export default class Note extends ManifestComponent {
 const Content = styled.div`
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: 10%;
     width: 100%;
-    height: 100%;
+    height: 90%;
 `;
 
 const NoteInput = styled.textarea`

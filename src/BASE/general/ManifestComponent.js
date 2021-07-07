@@ -1,11 +1,6 @@
 import BaseComponent from "./BaseComponent";
 
 let MOUSE_POSITION = {};
-let DRAG_INTERVAL = null;
-
-const updateMousePosition = (e) => {
-    MOUSE_POSITION = { x: e.pageX, y: e.pageY };
-}
 
 export default class ManifestComponent extends BaseComponent {
     constructor(props, skeleton) {
@@ -14,32 +9,46 @@ export default class ManifestComponent extends BaseComponent {
         this.state.beingDragged = false;
         this.state.dragX = 0;
         this.state.dragY = 0;
+
+        this.state.DRAG_INTERVAL = null;
     }
 
-    // Performs addition on two sets of 2D-coordinates represented by JSONs
+        // Performs addition on two sets of 2D-coordinates represented by JSONs
     static coordinateAddition = (c1, c2) => {
         return { x: c1.x + c2.x, y: c1.y + c2.y };
+    }
+
+        // Performs subtraction on two sets of 2D-coordinates represented by JSONs
+    static coordinateSubtraction = (c1, c2) => {
+        return { x: c1.x - c2.x, y: c1.y - c2.y };
     }
 
         // Create the mouse listener as well as the interval for dragging upon mount
     componentDidMount() {
         super.componentDidMount();
         
-        document.addEventListener("mousemove", updateMousePosition);
+        document.addEventListener("mousemove", this.updateMousePosition);
 
-        DRAG_INTERVAL = setInterval(() => {
-            let dragpos = { x: this.state.dragX, y: this.state.dragY };
+        this.setState({
+            DRAG_INTERVAL: setInterval(() => {
+                let dragpos = { x: this.state.dragX, y: this.state.dragY };
 
-            if( this.state.beingDragged === true ) this.setPosition(ManifestComponent.coordinateAddition(MOUSE_POSITION, dragpos));
-        }, 16);
+                if( this.state.beingDragged === true )
+                this.setPosition(ManifestComponent.coordinateSubtraction(MOUSE_POSITION, dragpos));
+            }, 32)
+        });
     }
 
         // Clear the mouse listener as well as the dragging interval upon unmount
     componentWillUnmount() {
         super.componentWillUnmount();
 
-        document.removeEventListener("mousemove", updateMousePosition);
-        clearInterval(DRAG_INTERVAL);
+        document.removeEventListener("mousemove", this.updateMousePosition);
+        clearInterval(this.state.DRAG_INTERVAL);
+    }
+
+    updateMousePosition = (e) => {
+        MOUSE_POSITION = { x: e.pageX, y: e.pageY };
     }
 
         // Begins dragging the component IF the drag option is enabled
@@ -61,7 +70,7 @@ export default class ManifestComponent extends BaseComponent {
 
         // Sets the position of the component
     setPosition = (pos) => {
-        this.setState({ position: pos });
+        this.setState({ ...this.state, position: pos });
     }
 
         // Sets the dimensions of the component
@@ -86,5 +95,10 @@ export default class ManifestComponent extends BaseComponent {
     isOptionChecked = (opt) => {
         if( this.state.options == null ) return false;
         return this.state.options.includes(opt);
+    }
+
+        // Returns whether this component is being dragged
+    isBeingDragged = () => {
+        return this.state.beingDragged;
     }
 }

@@ -75,6 +75,7 @@ export var jWorkspace =
     ...jHasName,            // Name of the workspace that will be displayed in a viewer
     ...jHasComponents,      // Sub-components of this workspace
     ...jHasOptions,         // Array of strings representing options that are enabled for the user
+    ...jHasDimensions,
     class: "workspace",         
 };
 

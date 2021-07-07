@@ -44,6 +44,7 @@ export default class BaseComponent extends React.Component {
         */
     static interpret = (vars, attrib) => {
         if( attrib == null ) return null;
+        if( typeof attrib == "number" ) return attrib;
 
             // Replace variables with their values
         if( vars != null )

@@ -2,13 +2,30 @@ import React from "react";
 import styled from "styled-components";
 import { getComponent } from "../Classes";
 import { jWorkspace } from "../Jsons";
-import DeleteOption from "../general/Options/DeleteOption";
-import AddOption from "../general/Options/AddOption";
 import ManifestComponent from "../general/ManifestComponent";
+import AddOption from "../general/Options/AddOption";
+import EditOption from "../general/Options/EditOption";
+import DeleteOption from "../general/Options/DeleteOption";
 
 export default class Workspace extends ManifestComponent {
     constructor(props) {
         super(props, jWorkspace);
+
+        this.state.editModeEnabled = false;
+    }
+
+        // Enables edit mode
+    enableEditMode = () => {
+        this.setState({ editModeEnabled: true });
+    }
+
+        // Called upon clicking on the workspace
+    requestDragBegin = () => {
+        if( this.state.editModeEnabled === true )
+        {
+            if( this.isBeingDragged() === true ) this.stopDragging();
+            else this.startDragging();
+        }
     }
 
         // Renders all available options for this component
@@ -28,6 +45,12 @@ export default class Workspace extends ManifestComponent {
                     <AddOptionContainer>
                         <AddOption hostReference={this} />
                     </AddOptionContainer>
+                }
+                {
+                    this.isOptionChecked("edit") &&
+                    <EditOptionContainer>
+                        <EditOption hostReference={this} />
+                    </EditOptionContainer>
                 }
             </>
         )
@@ -50,7 +73,14 @@ export default class Workspace extends ManifestComponent {
             <>
                 {
                     this.state.isRendered &&
-                    <Content id={this.state.id}>
+                    <Content
+                        id={this.state.id}
+                        onClick={() => {this.requestDragBegin();}}
+                        style={{
+                            left: this.state.position.x + "px",
+                            top: this.state.position.y + "px"
+                        }}
+                    >
                         {this.renderComponents()}
                         {this.renderOptions()}
                     </Content>
@@ -71,6 +101,14 @@ const DeleteOptionContainer = styled.div`
 const AddOptionContainer = styled.div`
     position: absolute;
     right: 5px;
+    top: 5px;
+    width: 48px;
+    height: 32px;
+`;
+
+const EditOptionContainer = styled.div`
+    position: absolute;
+    right: 106px;
     top: 5px;
     width: 48px;
     height: 32px;
