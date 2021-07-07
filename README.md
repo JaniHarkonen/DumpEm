@@ -1,7 +1,7 @@
 # TASK LIST
 ## TO DO
 - [x] ability to move components
-- [ ] ability to resize components
+- [x] ability to resize components
 - [ ] determine what components should be created
 - [ ] improve existing components
 
