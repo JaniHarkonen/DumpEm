@@ -19,12 +19,21 @@ export default class Workspace extends ManifestComponent {
         this.setState({ editModeEnabled: true });
     }
 
-        // Called upon clicking on the workspace
+        // Called upon attempting to drag the workspace
     requestDragBegin = () => {
         if( this.state.editModeEnabled === true )
         {
             if( this.isBeingDragged() === true ) this.stopDragging();
             else this.startDragging();
+        }
+    }
+
+        // Called upon attempting to resize the workspace
+    requestResizeBegin = () => {
+        if( this.state.editModeEnabled === true )
+        {
+            if( this.isBeingResized() === true ) this.stopResizing();
+            else this.startResizing();
         }
     }
 
@@ -75,10 +84,12 @@ export default class Workspace extends ManifestComponent {
                     this.state.isRendered &&
                     <Content
                         id={this.state.id}
-                        onClick={() => {this.requestDragBegin();}}
+                        onClick={() => {this.requestResizeBegin();}}
                         style={{
                             left: this.state.position.x + "px",
-                            top: this.state.position.y + "px"
+                            top: this.state.position.y + "px",
+                            width: this.state.dimensions.width + "px",
+                            height: this.state.dimensions.height + "px"
                         }}
                     >
                         {this.renderComponents()}

@@ -63,6 +63,10 @@ ManifestComponent
 was also created, which is designed to be the parent for all components that have a visual manifestation in the
 workspace. From this point on, components without a visual manifestation should not have the "options" attribute,
 as in order to bring up the options screen, the user has to click on a manifestation first.
+<br></br>
+<br></br>
 
 ## Wednesday 7.7.2021
 Added the ability to modify components. Currently users can only drag components.
+<br></br>
+Added the ability to resize components.

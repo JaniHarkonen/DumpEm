@@ -10,7 +10,12 @@ export default class ManifestComponent extends BaseComponent {
         this.state.dragX = 0;
         this.state.dragY = 0;
 
+        this.state.beingResized = false;
+        this.state.resizeX = 0;
+        this.state.resizeY = 0;
+
         this.state.DRAG_INTERVAL = null;
+        this.state.RESIZE_INTERVAL = null;
     }
 
         // Performs addition on two sets of 2D-coordinates represented by JSONs
@@ -35,7 +40,15 @@ export default class ManifestComponent extends BaseComponent {
 
                 if( this.state.beingDragged === true )
                 this.setPosition(ManifestComponent.coordinateSubtraction(MOUSE_POSITION, dragpos));
-            }, 32)
+            }, 16),
+
+            RESIZE_INTERVAL: setInterval(() => {
+                let rezpos = { x: this.state.resizeX, y: this.state.resizeY };
+                let newsize = ManifestComponent.coordinateSubtraction(MOUSE_POSITION, rezpos);
+
+                if( this.state.beingResized === true )
+                this.setDimensions({width: newsize.x, height: newsize.y});
+            }, 16)
         });
     }
 
@@ -45,6 +58,7 @@ export default class ManifestComponent extends BaseComponent {
 
         document.removeEventListener("mousemove", this.updateMousePosition);
         clearInterval(this.state.DRAG_INTERVAL);
+        clearInterval(this.state.RESIZE_INTERVAL);
     }
 
     updateMousePosition = (e) => {
@@ -68,9 +82,26 @@ export default class ManifestComponent extends BaseComponent {
         this.setState({ beingDragged: false });
     }
 
+        // Begins resizing the component IF the resize option is enabled
+    startResizing = () => {
+        if( this.isOptionChecked("resizable") === false ) return;
+        let pos = this.getPosition();
+
+        this.setState({
+            beingResized: true,
+            resizeX: pos.x,
+            resizeY: pos.y
+        })
+    }
+
+        // Stops resizing the component
+    stopResizing = () => {
+        this.setState({ beingResized: false });
+    }
+
         // Sets the position of the component
     setPosition = (pos) => {
-        this.setState({ ...this.state, position: pos });
+        this.setState({ position: pos });
     }
 
         // Sets the dimensions of the component
@@ -100,5 +131,10 @@ export default class ManifestComponent extends BaseComponent {
         // Returns whether this component is being dragged
     isBeingDragged = () => {
         return this.state.beingDragged;
+    }
+
+        // Returns whether this component is being resized
+    isBeingResized = () => {
+        return this.state.beingResized;
     }
 }
