@@ -24,7 +24,7 @@ export default class Note extends ManifestComponent {
             <>
             {
                 this.state.isRendered &&
-                <Content>
+                <Content id={this.state.id}>
                     <NoteInput
                         style=
                         {{

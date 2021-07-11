@@ -1,0 +1,35 @@
+{
+    "class": "viewer-tabbed",
+    "attributes": {
+        "hostComponent": "ROOT",
+
+        "scripts": {
+            "init": null,
+            "afterMount": null,
+            "onUnmount": null
+        },
+
+        "variables": {
+            
+        },
+
+        "savedFields": {
+
+        },
+
+        "options": ["hide-tabs"],
+        
+        "position": {
+            "x": "0px",
+            "y": "0px"
+        },
+
+        "dimensions": {
+            "width": "100%",
+            "height": "100%"
+        },
+
+        "workspaces": ["choose-option", "choose-folder"],
+        "activeTab": 0
+    }
+}

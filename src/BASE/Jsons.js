@@ -14,7 +14,7 @@ export var jBasic =
     hostComponent: "",      // Unique identifier of the host component
     hostReference: null,    // Will contain a reference to the host component instance
     this: null,             // Will contain a reference to this component's instance
-    isRendered: false,      // Whether the component should render
+    isRendered: true,       // Whether the component should render
 
         // Scripts that will trigger upon the event they're assigned to
     scripts: {
@@ -67,7 +67,6 @@ export var jHasDimensions =
 
 /*
     Properties for workspace.
-    (EXTENDS jBasic)
  */
 export var jWorkspace = 
 {
@@ -81,7 +80,6 @@ export var jWorkspace =
 
 /*
     Properties for Tabbed viewer.
-    (EXTENDS jBasic)
 */
 export var jTabbedViewer =
 {
@@ -90,12 +88,11 @@ export var jTabbedViewer =
     ...jHasDimensions,          // The dimensions and the position of the viewer
     class: "viewer-tabbed",
     workspaces: [],             // Unique identifiers of the workspaces tabbed within this viewer
-    activeTab: -1,              // The index of the tab currently being displayed
+    activeTab: 0,               // The index of the tab currently being displayed
 };
 
 /*
     Properties for Symbol list.
-    (EXTENDS jBasic)
 */
 export var jSymbolList = 
 {
@@ -108,21 +105,19 @@ export var jSymbolList =
 
 /*
     Properties for Note.
-    (EXTENDS jBasic)
 */
 export var jNote =
 {
     ...jBasic,
     ...jHasDimensions,      // The position and the dimensions fo the note
     class: "note",
-    font: "",               // Name of the font family the note text will be drawn in
-    fontSize: -1,           // Height of the font in pixels
+    font: "Arial",          // Name of the font family the note text will be drawn in
+    fontSize: "16px",       // Height of the font in pixels
     content: ""             // The text content of the note
 };
 
 /*
     Properties for FileExplorer.
-    (EXTENDS jBasic)
 */
 export var jFileExplorer =
 {
@@ -134,4 +129,58 @@ export var jFileExplorer =
     currentFolder: "",                  // Folder the explorer is currently displaying
     rootFolder: "",                     // Folder the explorer cannot go beyond
     itemTypes: ["FOLDER", "FILE"],      // Types of items visible to the explorer (FOLDER, FILE, <.extension>)
+
+        /*
+            Contains extensions (without leading dot) and the names of the graphics assets
+            representing them inside the explorer view.
+        */
+    extensionImages: {
+    }
 };
+
+/*
+    Properties for Button.
+*/
+export var jButton =
+{
+    ...jBasic,
+    ...jHasDimensions,
+    ...jHasComponents,
+    ...jHasOptions,
+
+    scripts: {
+        ...jBasic.scripts,
+        onClick: null
+    },
+
+    class: "button",
+    style: ""               // Additional CSS-styling that will be applied to the button element
+}
+
+/*
+    Properties for Text.
+*/
+export var jText =
+{
+    ...jBasic,
+    ...jHasDimensions,              // NOTE: The position will be relative to the host component
+    class: "item-text",
+    content: "",                    // Text content that will be displayed
+    font: "Arial",                  // Name of the font family the text will be draw in
+    fontSize: "16px",               // Height of the font in pixels
+    horizontalAlign: "flex-start",  // Horizontal alignment of the text (uses Flexbox)
+    verticalAlign: "flex-start",    // Vertical alignment of the text (uses Flexbox)
+    style: ""                       // Additional CSS-styling that will be applied to the text element
+}
+
+/*
+    Properties for Image.
+*/
+export var jImage =
+{
+    ...jBasic,
+    ...jHasDimensions,          // NOTE: The position will be relative to the host component
+    class: "item-image",
+    assetName: "",              // Name of the image asset that will be displayed
+    style: ""                   // Additional CSS-styling that will be applied to the text element
+}

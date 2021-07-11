@@ -11,11 +11,15 @@ export default class TabbedViewer extends ManifestComponent {
 
         // Changes the tab by changing the workspaces that is being rendered
     changeTab = (tab) => {
+        if( this.isOptionChecked("tab-lock") ) return;
+
         this.setState({activeTab: tab});
     }
 
         // Renders the titles of workspaces assigned to this viewer as tab labels
     renderLabels = () => {
+        if( this.isOptionChecked("hide-tabs") ) return "";
+
         return(this.state.workspaces.map((ws, index) => {
             let ws_comp = this.state.hostReference.getComponentById(ws);
             if( ws_comp == null ) return "";
@@ -62,7 +66,13 @@ export default class TabbedViewer extends ManifestComponent {
             <>
             {
                 this.state.isRendered &&
-                <Content id={this.state.id}>
+                <Content
+                    id={this.state.id}
+                    left={this.getModifiedState(this.state.position.x)}
+                    top={this.getModifiedState(this.state.position.y)}
+                    width={this.getModifiedState(this.state.dimensions.width)}
+                    height={this.getModifiedState(this.state.dimensions.height)}
+                >
                     {this.renderActiveTab()}
                     {this.renderLabels()}
                 </Content>
@@ -74,10 +84,10 @@ export default class TabbedViewer extends ManifestComponent {
 
 const Content = styled.div`
     position: absolute;
-    left: 50px;
-    top: 50px;
-    width: 80%;
-    height: 80%;
+    left: ${props => props.left};
+    top: ${props => props.top};
+    width: ${props => props.width};
+    height: ${props => props.height};
 `;
 
 const Label = styled.div`

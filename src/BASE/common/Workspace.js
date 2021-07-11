@@ -88,8 +88,8 @@ export default class Workspace extends ManifestComponent {
                         style={{
                             left: this.state.position.x + "px",
                             top: this.state.position.y + "px",
-                            width: this.state.dimensions.width + "px",
-                            height: this.state.dimensions.height + "px"
+                            width: this.state.dimensions.width,
+                            height: this.state.dimensions.height
                         }}
                     >
                         {this.renderComponents()}
@@ -131,7 +131,5 @@ const Content = styled.div`
     top: 0px;
     width: calc(100% - 4px);
     height: calc(100% - 4px);
-    border-style: solid;
-    border-width: 2px;
-    border-color: black;
+    
 `;

@@ -2,6 +2,10 @@ import BaseComponent from "./BaseComponent";
 
 let MOUSE_POSITION = {};
 
+/*
+    Only DumpEm components that have a visual manifestation on the
+    screen should extend this component.
+*/
 export default class ManifestComponent extends BaseComponent {
     constructor(props, skeleton) {
         super(props, skeleton);

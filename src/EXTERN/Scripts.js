@@ -5,6 +5,8 @@
 
 */
 
+import { getComponentById } from "../BASE/ComponentRegistry";
+
 /*
     The DumpEm- components will fetch their scripts from this JSON by name.
 */
@@ -25,9 +27,13 @@ export const runScript = (scr_str) => {
     return SCRIPTS[script[0]](a_scr_str);
 }
 
-/*
-    Test script.
-*/
-SCRIPTS.testInit = () => {
-    console.log("XDXDDDDD");
+
+//////////////////////// CUSTOM SCRIPTS ////////////////////////////
+
+SCRIPTS.scrChooseRepo = () => {
+    getComponentById("ROOT-startup-viewer").changeTab(1);
+}
+
+SCRIPTS.scrBackToMain = () => {
+    getComponentById("ROOT-startup-viewer").changeTab(0);
 }

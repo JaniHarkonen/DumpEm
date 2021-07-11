@@ -3,6 +3,10 @@ import { modifyJson, readJson } from "../Helpers";
 import { registerComponent } from "../ComponentRegistry";
 import { runScript as Scripts_runScript, SCRIPTS } from "../../EXTERN/Scripts";
 
+
+/*
+    Basic class each DumpEm component should extend.
+*/
 export default class BaseComponent extends React.Component {
     constructor(props, skeleton) {
         super(props);

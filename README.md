@@ -1,7 +1,13 @@
 # TASK LIST
 ## TO DO
-- [x] ability to move components
-- [x] ability to resize components
+
+# Repository tasks
+- [ ] add "Back"- button for FileExplorer
+- [ ] add button for repository selection
+- [ ] handle opening a new repository
+- [ ] handle opening the most recent repository
+- [ ] ? add a validity check for repositories in FileExplorer
+
 - [ ] determine what components should be created
 - [ ] improve existing components
 
@@ -70,3 +76,12 @@ as in order to bring up the options screen, the user has to click on a manifesta
 Added the ability to modify components. Currently users can only drag components.
 <br></br>
 Added the ability to resize components.
+
+## Sunday 11.7.2021
+Began creating the initial repository selection window. A visual rework of some components, FileExplorer for
+example, was required, as well as the addition of new features for existing components. New components were
+also added, including geneal ones like TextItem and ImageItem, but also common ones like Button. The EXTERN-
+folder will be used to store the assets and configurations for the repository selection window, however a
+hook must be created that allows repositories to have their own versions of "Scripts.js" and "Assets.js" files.
+In the worst case scenario, this is not possible and the files will have to be appended manually in the
+DumpEm application folder.

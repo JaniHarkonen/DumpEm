@@ -9,6 +9,9 @@ import TabbedViewer from "./common/TabbedViewer";
 import Note from "./common/Note";
 
 import FileExplorer from "./common/FileExplorer";
+import Button from "./common/Button";
+import TextItem from "./general/Items/TextItem";
+import ImageItem from "./general/Items/ImageItem";
 
 
 /*
@@ -62,6 +65,9 @@ export function getComponent(classname, attrib) {
         case "viewer-tabbed": return makeComponent(TabbedViewer, attrib);
         case "note": return makeComponent(Note, attrib);
         case "file-explorer": return makeComponent(FileExplorer, attrib);
+        case "button": return makeComponent(Button, attrib);
+        case "item-text": return makeComponent(TextItem, attrib);
+        case "item-image": return makeComponent(ImageItem, attrib);
         default: return null;
     }
 }

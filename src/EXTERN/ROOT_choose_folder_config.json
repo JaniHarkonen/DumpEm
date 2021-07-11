@@ -1,0 +1,141 @@
+{
+    "class": "workspace",
+    "attributes": {
+        "hostComponent": "choose-folder",
+
+        "scripts": {
+            "init": null,
+            "afterMount": null,
+            "onUnmount": null
+        },
+
+        "variables": {
+            
+        },
+
+        "savedFields": {
+
+        },
+
+        "components": [
+            {
+                "class": "item-text",
+                "attributes": {
+                    "id": "caption",
+                    "hostComponent": "choose-folder",
+                    "content": "Choose the repository",
+                    "fontSize": "40px",
+                    "horizontalAlign": "center",
+                    "verticalAlign": "center",
+
+                    "position": {
+                        "y": "5.5%"
+                    },
+
+                    "dimensions": {
+                        "width": "100%",
+                        "height": "25%"
+                    },
+
+                    "style": "font-weight: bold;"
+                }
+            },
+            {
+                "class": "button",
+                "attributes": {
+                    "id": "button-back",
+                    "hostComponent": "choose-folder",
+
+                    "scripts": {
+                        "onClick": "scrBackToMain"
+                    },
+
+                    "position": {
+                        "x": "5%",
+                        "y": "5%"
+                    },
+
+                    "dimensions": {
+                        "width": "125px",
+                        "height": "48px"
+                    },
+
+                    "components": [
+                        {
+                            "class": "item-text",
+                            "attributes": {
+                                "id": "text-back-caption",
+                                "hostComponent": "button-back",
+                                "content": "Back",
+                                "fontSize": "28px",
+                                "verticalAlign": "center",
+
+                                "position": {
+                                    "x": "40%",
+                                    "y": "0px"
+                                },
+            
+                                "dimensions": {
+                                    "width": "100%",
+                                    "height": "100%"
+                                }
+                            }
+                        },
+                        {
+                            "class": "item-image",
+                            "attributes": {
+                                "id": "image-back",
+                                "hostComponent": "button-back",
+                                "assetName": "imgPrevious",
+
+                                "position": {
+                                    "x": "7px",
+                                    "y": "18%"
+                                },
+    
+                                "dimensions": {
+                                    "width": "25%",
+                                    "height": "65%"
+                                },
+
+                                "style": "position: absolute;"
+                            }
+                        }
+                    ],
+
+                    "style": "font-weight: bold; background-color: #D8F296; border-radius: 8px; cursor: pointer; &:hover{background-color: #C9E08B;}"
+                }
+            },
+            {
+                "class": "file-explorer",
+                "attributes": {
+                    "id": "repo-explorer",
+                    "hostComponent": "choose-folder",
+                    "itemTypes": ["FOLDER", "FILE"],
+
+                    "position": {
+                        "x": "25%",
+                        "y": "25%"
+                    },
+
+                    "dimensions": {
+                        "width": "50%",
+                        "height": "50%"
+                    }
+                }
+            }
+        ],
+
+        "options": [],
+
+        "position": {
+            "x": 0,
+            "y": 0
+        },
+
+        "dimensions": {
+            "width": "100%",
+            "height": "100%"
+        }
+    }
+}

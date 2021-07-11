@@ -2,6 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { jFileExplorer } from "../Jsons";
 import ManifestComponent from "../general/ManifestComponent";
+import { getCurrentRepository } from "../Helpers";
+
+// Graphics imports
+import imgFileExpFile from "../../BASE/assets/imgFileExpFile.svg";
+import imgFileExpFolder from "../../BASE/assets/imgFileExpFolder.svg";
 
 const { exec } = window.require("child_process");
 const fs = window.require("fs");
@@ -22,7 +27,7 @@ export default class FileExplorer extends ManifestComponent {
 
             // If the default folder is not defined, content is null
             // Otherwise, fetch the contents of the folder
-        if( dir == null || dir === "" ) this.state.currentFolderContent = null;
+        if( dir == null || dir === "" ) this.state.currentFolderContent = this.readFolder(getCurrentRepository());
         else this.state.currentFolderContent = this.readFolder(dir);
     }
 
@@ -64,7 +69,6 @@ export default class FileExplorer extends ManifestComponent {
     moveBack = (path) => {
         let next = pathModule.join(path, "../");
         this.moveToFolder(next)
-        //if( next !== this.getModifiedState(this.state.rootFolder) ) this.moveToFolder(next);
     }
 
         // Called upon clicking a file system element (file/folder)
@@ -75,7 +79,7 @@ export default class FileExplorer extends ManifestComponent {
         }
         else
         {
-            exec("\"" + path + "\"");
+            if( this.isOptionChecked("allow-exec") ) exec("\"" + path + "\"");
         }
     }
 
@@ -86,9 +90,17 @@ export default class FileExplorer extends ManifestComponent {
         return(
             this.state.currentFolderContent.map((item) => {
                 return  <FileEntry
-                            onClick={() => {this.fsItemClicked(item.path/*this.state.currentFolder + item*/)}}
+                            onClick={() => {this.fsItemClicked(item.path)}}
                         >
-                            {item.name}
+                            <FileEntryImageContainer>
+                                <FileEntryImage
+                                    src={(item.isFolder) ? imgFileExpFolder : imgFileExpFile}
+                                />
+                            </FileEntryImageContainer>
+
+                            <FileEntryInfoContainer>
+                                <div><b>{item.name}</b></div>
+                            </FileEntryInfoContainer>
                         </FileEntry>;
             })
         );
@@ -97,9 +109,17 @@ export default class FileExplorer extends ManifestComponent {
 
     render() {
         return(
-            <Content>
-                {this.renderCurrentFolder(this.state.currentFolder)}
-                <GoBack onClick={() => {this.moveBack(this.state.currentFolder)}}>BACK</GoBack>
+            <Content
+                id={this.state.id}
+                left={this.getModifiedState(this.state.position.x)}
+                top={this.getModifiedState(this.state.position.y)}
+                width={this.getModifiedState(this.state.dimensions.width)}
+                height={this.getModifiedState(this.state.dimensions.height)}
+            >
+                <FileContainer>
+                    {this.renderCurrentFolder(this.state.currentFolder)}
+                </FileContainer>
+                {/*<GoBack onClick={() => {this.moveBack(this.state.currentFolder)}}>BACK</GoBack>*/}
             </Content>
         );
     }
@@ -107,30 +127,72 @@ export default class FileExplorer extends ManifestComponent {
 
 const Content = styled.div`
     position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
+    left: ${props => props.left};
+    top: ${props => props.top};
+    width: ${props => props.width};
+    height: ${props => props.height};
 
-    background-color: #DDFFFF;
+    border-radius: 12px;
+    border-style: solid;
+    border-width: 3px;
+
+    background-color: white;
+    user-select: none;
+`;
+
+const FileContainer = styled.div`
+    position: relative;
+    left: 32px;
+    top: 18%;
+    width: calc(50% - 32px);
+    height: 76%;
+    overflow: auto;
+
+    border-radius: 8px;
+
+    background-color: #F7F7F7;
 `;
 
 const FileEntry = styled.div`
     position: relative;
-    left: 16px;
-    margin-top: 4px;
-    width: 218px;
-    height: auto;
+    width: 350px;
+    height: 32px;
 
-    background-color: #00C6FF;
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
     cursor: pointer;
-    border-radius: 6px;
-    padding-left: 32px;
-    user-select: none;
-
     &:hover {
-        opacity: 0.67;
+        background-color: #E0E0E0;
     }
+`;
+
+const FileEntryImageContainer = styled.div`
+    position: absolute;
+    left: 16px;
+    top: 5px;
+    width: 32px;
+    height: calc(100% - 10px);
+`;
+
+const FileEntryImage = styled.img`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+`;
+
+const FileEntryInfoContainer = styled.div`
+    position: absolute;
+    display: flex;
+    left: 48px;
+    top: 0px;
+    width: 287px;
+    height: 100%;
+    align-items: center;
+    padding-left: 15px;
 `;
 
 const GoBack = styled.div`
