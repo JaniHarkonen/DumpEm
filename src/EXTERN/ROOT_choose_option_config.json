@@ -56,6 +56,10 @@
                         "height": "45%"
                     },
 
+                    "scripts": {
+                        "onClick": "scrSelectMostRecent"
+                    },
+
                     "components": [
                         {
                             "class": "item-text",
@@ -76,7 +80,7 @@
                                     "height": "25%"
                                 },
             
-                                "style": "position: absolute;"
+                                "style": "position: absolute; text-align: center;"
                             }
                         },
                         {

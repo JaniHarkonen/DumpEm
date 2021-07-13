@@ -2,10 +2,10 @@
 ## TO DO
 
 # Repository tasks
-- [ ] add "Back"- button for FileExplorer
-- [ ] add button for repository selection
-- [ ] handle opening a new repository
-- [ ] handle opening the most recent repository
+- [x] add "Back"- button for FileExplorer
+- [x] add button for repository selection
+- [x] handle opening a new repository
+- [x] handle opening the most recent repository
 - [ ] ? add a validity check for repositories in FileExplorer
 
 - [ ] determine what components should be created
@@ -85,3 +85,9 @@ folder will be used to store the assets and configurations for the repository se
 hook must be created that allows repositories to have their own versions of "Scripts.js" and "Assets.js" files.
 In the worst case scenario, this is not possible and the files will have to be appended manually in the
 DumpEm application folder.
+
+## Tuesday 13.7.2021
+Repository selection is now done. Only repository validity check and file sorting are needed, however, these
+can be postponed for later. The startup repository containing the repository selection window should be
+created. This requires some changes to the logic of loading external assets, namely scripts and effects
+(graphics, sounds etc.). 

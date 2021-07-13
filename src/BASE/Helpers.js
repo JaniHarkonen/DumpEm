@@ -79,11 +79,11 @@ export const writeJson = (path, json) => {
 }
 
 /*
-    Modifies a given .json-file by concatenating the JSON within with a given
-    JSON.
+    Modifies a configuration .json-file of a component by concatenating the
+    "attributes"-field of a JSON within with a given JSON.
 
     ARGS:
-            path    - Path to the .json- file that should be modified.
+            path    - Path to the configuration file that should be modified.
             json    - JSON to modify the file with.
 */
 export const modifyJson = (path, json) => {
@@ -93,6 +93,21 @@ export const modifyJson = (path, json) => {
     let mod_attribs = { ...read_json.attributes, ...json };
     let mod_json = { ...read_json, ...{attributes: mod_attribs} };
     writeJson(path, mod_json);
+}
+
+/*
+    Modifies a given .json-file by concatenating the JSON within with a given
+    JSON.
+
+    ARGS:
+            path    - Path to the .json- file that should be modified.
+            json    - JSON to modify the file with.
+*/
+export const modifyJsonVanilla = (path, json) => {
+    let read_json = readJson(path);
+    if( read_json == null ) return;
+
+    writeJson(path, { ...read_json, ...json });
 }
 
 /*

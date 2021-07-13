@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { runScript } from "../../EXTERN/Scripts";
 import { getComponent } from "../Classes";
 import ManifestComponent from "../general/ManifestComponent";
 import { jButton } from "../Jsons";

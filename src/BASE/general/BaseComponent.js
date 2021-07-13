@@ -94,12 +94,17 @@ export default class BaseComponent extends React.Component {
 
         // Runs a script assigned to this component
     runComponentScript = (scr) => {
+        this.runComponentScriptArgs(scr, null);
+    }
+
+        // Runs a script assigned to this component WITH arguments
+    runComponentScriptArgs = (scr, args) => {
         if( scr == null ) return;
 
         let script = this.state.scripts[scr];
         if( script == null || script === "" ) return;
 
-        SCRIPTS[this.getModifiedState(script)]();
+        SCRIPTS[this.getModifiedState(script)](args);
     }
 
         // Saves the attributes of the component to its config file
@@ -128,7 +133,12 @@ export default class BaseComponent extends React.Component {
     
         // Adds a given sub-component to the "components"-array
     addComponent = (comp) => {
-        console.log(comp)
         this.setState({components: this.state.components.concat(comp)});
+    }
+
+        // Reloads the component's configuration (also re-renders)
+    reloadConfiguration = () => {
+        console.log(this.state.config);
+        this.setState({ ...this.state, ...readJson(this.getModifiedState(this.state.config)).attributes })
     }
 }

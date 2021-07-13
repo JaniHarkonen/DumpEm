@@ -3,10 +3,14 @@ import styled from "styled-components";
 import { jFileExplorer } from "../Jsons";
 import ManifestComponent from "../general/ManifestComponent";
 import { getCurrentRepository } from "../Helpers";
+import { nextKey } from "../Classes";
 
 // Graphics imports
-import imgFileExpFile from "../../BASE/assets/imgFileExpFile.svg";
-import imgFileExpFolder from "../../BASE/assets/imgFileExpFolder.svg";
+import imgFileExpFile from "../../BASE/assets/img_file_text.svg";
+import imgFileExpFolder from "../../BASE/assets/img_folder_black.svg";
+import imgCurrentFolder from "../../BASE/assets/img_folder_white.svg";
+import imgSelectionCheckmark from "../../BASE/assets/img_green_checkmark.svg";
+import imgPreviousFolder from "../../BASE/assets/img_arrow_left.svg";
 
 const { exec } = window.require("child_process");
 const fs = window.require("fs");
@@ -27,19 +31,44 @@ export default class FileExplorer extends ManifestComponent {
 
             // If the default folder is not defined, content is null
             // Otherwise, fetch the contents of the folder
-        if( dir == null || dir === "" ) this.state.currentFolderContent = this.readFolder(getCurrentRepository());
+        if( dir == null || dir === "" )
+        {
+            this.state.currentFolder = getCurrentRepository();
+            this.state.currentFolderContent = this.readFolder(this.state.currentFolder);
+        }
         else this.state.currentFolderContent = this.readFolder(dir);
+
+        this.state.CURRENT_FOLDER_INPUT = this.state.currentFolder;
+        this.state.ENTER_LISTENER = document.addEventListener("keypress", this.handleEnterPress);
+    }
+
+        // Detaches ENTER-listener on unmount
+    componentWillUnmount() {
+        super.componentWillUnmount();
+        document.removeEventListener("keypress", this.handleEnterPress);
+    }
+
+        // Handles changing of folder via ENTER
+    handleEnterPress = (e) => {
+        if( e.keyCode !== 13 ) return;
+
+        let infield = document.getElementById(this.state.id + "__current-folder-input");
+        
+        if( infield !== document.activeElement ) return;
+        this.moveToFolder(infield.value);
     }
 
         // Reads and returns the contents of a folder with current filters
     readFolder = (path) => {
         let files = fs.readdirSync(path);
         let file_objs = files.map((file) => {
+            let is_folder = fs.lstatSync(path + "\\" + file).isDirectory();
+
             if( (path + "\\" + file).includes("System Volume Information") ) return false;
             return { 
-                path: path + "\\" + file,
+                path: (is_folder) ? path + file + "\\" : path + "\\" + file,
                 name: file,
-                isFolder: fs.lstatSync(path + "\\" + file).isDirectory(),
+                isFolder: is_folder,
                 extension: pathModule.extname(file)
             };
         });
@@ -61,7 +90,11 @@ export default class FileExplorer extends ManifestComponent {
     moveToFolder = (path) => {
         if( path == null || path === "" ) return false;
 
-        this.setState({currentFolder: path, currentFolderContent: this.readFolder(path)});
+        this.setState({
+            currentFolder: path,
+            currentFolderContent: this.readFolder(path),
+            CURRENT_FOLDER_INPUT: path
+        });
         return true;
     }
 
@@ -81,6 +114,8 @@ export default class FileExplorer extends ManifestComponent {
         {
             if( this.isOptionChecked("allow-exec") ) exec("\"" + path + "\"");
         }
+
+        this.runComponentScript("onItem");
     }
 
         // Renders the contents of the folder that were fetched upon construction
@@ -91,6 +126,7 @@ export default class FileExplorer extends ManifestComponent {
             this.state.currentFolderContent.map((item) => {
                 return  <FileEntry
                             onClick={() => {this.fsItemClicked(item.path)}}
+                            key={nextKey()}
                         >
                             <FileEntryImageContainer>
                                 <FileEntryImage
@@ -116,10 +152,38 @@ export default class FileExplorer extends ManifestComponent {
                 width={this.getModifiedState(this.state.dimensions.width)}
                 height={this.getModifiedState(this.state.dimensions.height)}
             >
-                <FileContainer>
+                <TopBarContainer>
+                    <CurrentFolderContainer id={this.state.id + "__current-folder"}>
+
+                        <CurrentFolderIconContainer>
+                            <CurrentFolderIcon src={imgCurrentFolder} />
+                        </CurrentFolderIconContainer>
+
+                        <CurrentFolderInputContainer>
+                            <CurrentFolderInput
+                                id={this.state.id + "__current-folder-input"}
+                                value={this.state.CURRENT_FOLDER_INPUT}
+                                onChange={(e) => {this.setState({CURRENT_FOLDER_INPUT: e.target.value})}}
+                            />
+                        </CurrentFolderInputContainer>
+
+                    </CurrentFolderContainer>
+                </TopBarContainer>
+
+                <FileContainer id={this.state.id + "__file-container"}>
                     {this.renderCurrentFolder(this.state.currentFolder)}
                 </FileContainer>
-                {/*<GoBack onClick={() => {this.moveBack(this.state.currentFolder)}}>BACK</GoBack>*/}
+
+                <PreviousFolderContainer onClick={() => this.moveBack(this.state.currentFolder)}>
+                    <PreviousFolderImage src={imgPreviousFolder} />
+                </PreviousFolderContainer>
+
+                <FolderSelectionButton onClick={() => { this.runComponentScriptArgs("onSelect", this.state.currentFolder) }}>
+                    <FolderSelectionButtonImageContainer>
+                        <FolderSelectionButtonImage src={imgSelectionCheckmark} />
+                    </FolderSelectionButtonImageContainer>
+                    <FolderSelectionTextContainer>Select</FolderSelectionTextContainer>
+                </FolderSelectionButton>
             </Content>
         );
     }
@@ -138,6 +202,123 @@ const Content = styled.div`
 
     background-color: white;
     user-select: none;
+`;
+
+const PreviousFolderContainer = styled.div`
+    position: absolute;
+    left: calc(50% + 16px);
+    top: 18%;
+    width: 42px;
+    height: 32px;
+
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 3px;
+
+    cursor: pointer;
+`;
+
+const PreviousFolderImage = styled.img`
+    position: relative;
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+`;
+
+const FolderSelectionButton = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+
+    right: 16px;
+    bottom: 16px;
+    width: 100px;
+    height: 48px;
+
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 3px;
+
+    cursor: pointer;
+`;
+
+const FolderSelectionTextContainer = styled.div`
+    position: absolute;
+    left: 42%;
+    font-weight: bold;
+`;
+
+const FolderSelectionButtonImageContainer = styled.div`
+    position: relative;
+    left: 8%;
+    height: 100%;
+    width: 25%;
+`;
+
+const FolderSelectionButtonImage = styled.img`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+`;
+
+const TopBarContainer = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 15%;
+`;
+
+const CurrentFolderContainer = styled.div`
+    position: relative;
+    left: 24px;
+    width: calc(100% - 16px);
+    height: 75%;
+`;
+
+const CurrentFolderInputContainer = styled.div`
+    position: relative;
+    display: inline-block;
+    left: 0px;
+    top: 0px;
+    width: calc(100% - 44px);
+    height: 100%;
+`;
+
+const CurrentFolderInput = styled.input`
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    width: calc(100% - 40px);
+    height: 50%;
+    transform: translateY(-50%);
+    border-style: none;
+    font-size: 16px;
+    font-weight: bold;
+`;
+
+const CurrentFolderIconContainer = styled.div`
+    position: relative;
+    display: inline-block;
+    float: left;
+    left: 0px;
+    top: 0px;
+    width: 44px;
+    height: 100%;
+`;
+
+const CurrentFolderIcon = styled.img`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
 `;
 
 const FileContainer = styled.div`
@@ -193,16 +374,4 @@ const FileEntryInfoContainer = styled.div`
     height: 100%;
     align-items: center;
     padding-left: 15px;
-`;
-
-const GoBack = styled.div`
-    position: absolute;
-    left: 400px;
-    top: 50px;
-    width: 64px;
-    height: 64px;
-    background-color: red;
-    color: white;
-    cursor: pointer;
-    user-select: none;
 `;

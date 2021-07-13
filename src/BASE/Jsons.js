@@ -130,6 +130,13 @@ export var jFileExplorer =
     rootFolder: "",                     // Folder the explorer cannot go beyond
     itemTypes: ["FOLDER", "FILE"],      // Types of items visible to the explorer (FOLDER, FILE, <.extension>)
 
+    scripts: {
+        ...jBasic.scripts,
+        onItem: null,                   // Upon selecting an item
+        onSelect: null,                 // Upon clicking "Select"
+        onFolderChange: null            // Upon changing the current folder
+    },
+
         /*
             Contains extensions (without leading dot) and the names of the graphics assets
             representing them inside the explorer view.

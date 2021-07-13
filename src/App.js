@@ -1,9 +1,9 @@
 import Workspace from "./BASE/common/Workspace";
-import { getStartupRepository, setCurrentRepository } from "./BASE/Helpers";
+import { setCurrentRepository } from "./BASE/Helpers";
 const { app } = window.require("@electron/remote");
 
 function App() {
-    setCurrentRepository(app.getAppPath() + "\\src\\EXTERN\\"/*getStartupRepository()*/);
+    setCurrentRepository(app.getAppPath() + "\\src\\EXTERN\\");
 
     return (
     <div className="App">

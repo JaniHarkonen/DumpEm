@@ -6,6 +6,7 @@
 */
 
 import { getComponentById } from "../BASE/ComponentRegistry";
+import { modifyJsonVanilla, readJson, setCurrentRepository } from "../BASE/Helpers";
 
 /*
     The DumpEm- components will fetch their scripts from this JSON by name.
@@ -36,4 +37,21 @@ SCRIPTS.scrChooseRepo = () => {
 
 SCRIPTS.scrBackToMain = () => {
     getComponentById("ROOT-startup-viewer").changeTab(0);
+}
+
+SCRIPTS.scrSelectFolder = (args) => {
+    modifyJsonVanilla("config.json", { recentRepo: args });
+    setCurrentRepository(args);
+
+    let root = getComponentById("ROOT");
+    root.state.config = ".init.json";
+    root.reloadConfiguration();
+}
+
+SCRIPTS.scrSelectMostRecent = () => {
+    setCurrentRepository(readJson("config.json").recentRepo);
+
+    let root = getComponentById("ROOT");
+    root.state.config = ".init.json";
+    root.reloadConfiguration();
 }
