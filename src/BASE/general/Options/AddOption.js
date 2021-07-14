@@ -1,28 +1,37 @@
 import React from "react";
 import styled from "styled-components";
+import AddOptionPopup from "./Add/AddOptionPopup";
 
 import imgAdd from "../../assets/img_add_circle.svg";
 
 export default class AddOption extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isPopupOpen: false
+        };
+    }
 
     handleClick() {
-        let id = "idid";
-        let classname = "symbol-list";
-        let comp = {
-            class: classname,
-            attributes: {
-                id: id,
-                isRendered: true
-            }
-        }
-        this.props.hostReference.addComponent(comp);
+        this.setState({ isPopupOpen: true });
     }
 
     render() {
         return(
-            <Content onClick={() => this.handleClick()}>
-                <AddImage src={imgAdd} />
-            </Content>
+            <>
+                <Content onClick={() => this.handleClick()}>
+                    <AddImage src={imgAdd} />
+                </Content>
+
+                {
+                    this.state.isPopupOpen &&
+                    <AddOptionPopup
+                        closeOverlay={() => { this.setState({ isPopupOpen: false }) }}
+                        hostReference={this.props.hostReference}
+                    />
+                }
+            </>
         );
     }
 }

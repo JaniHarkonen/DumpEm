@@ -138,7 +138,6 @@ export default class BaseComponent extends React.Component {
 
         // Reloads the component's configuration (also re-renders)
     reloadConfiguration = () => {
-        console.log(this.state.config);
         this.setState({ ...this.state, ...readJson(this.getModifiedState(this.state.config)).attributes })
     }
 }

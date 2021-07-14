@@ -88,3 +88,7 @@ Repository selection is now done. Only repository validity check and file sortin
 can be postponed for later. The startup repository containing the repository selection window should be
 created. This requires some changes to the logic of loading external assets, namely scripts and effects
 (graphics, sounds etc.). 
+
+## Wednesday 14.7.2021
+Made changes to the graphics of "Add", "Edit" and "Delete"- option buttons. They now incorporate SVG-graphics.
+

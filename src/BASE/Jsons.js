@@ -191,3 +191,23 @@ export var jImage =
     assetName: "",              // Name of the image asset that will be displayed
     style: ""                   // Additional CSS-styling that will be applied to the text element
 }
+
+/*
+    All jsons bundled in one.
+*/
+
+export var JSONS = {
+    jBasic: jBasic,
+    jHasName: jHasName,
+    jHasOptions: jHasOptions,
+    jHasComponents: jHasComponents,
+    jHasDimensions: jHasDimensions,
+    jWorkspace: jWorkspace,
+    jTabbedViewer: jTabbedViewer,
+    jSymbolList: jSymbolList,
+    jNote: jNote,
+    jFileExplorer: jFileExplorer,
+    jButton: jButton,
+    jText: jText,
+    jImage: jImage
+}
