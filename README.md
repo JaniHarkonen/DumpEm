@@ -73,6 +73,8 @@ as in order to bring up the options screen, the user has to click on a manifesta
 Added the ability to modify components. Currently users can only drag components.
 <br></br>
 Added the ability to resize components.
+<br></br>
+<br></br>
 
 ## Sunday 11.7.2021
 Began creating the initial repository selection window. A visual rework of some components, FileExplorer for
@@ -82,16 +84,23 @@ folder will be used to store the assets and configurations for the repository se
 hook must be created that allows repositories to have their own versions of "Scripts.js" and "Assets.js" files.
 In the worst case scenario, this is not possible and the files will have to be appended manually in the
 DumpEm application folder.
+<br></br>
+<br></br>
 
 ## Tuesday 13.7.2021
 Repository selection is now done. Only repository validity check and file sorting are needed, however, these
 can be postponed for later. The startup repository containing the repository selection window should be
 created. This requires some changes to the logic of loading external assets, namely scripts and effects
-(graphics, sounds etc.). 
+(graphics, sounds etc.).
+<br></br>
+<br></br>
 
 ## Wednesday 14.7.2021
 Made changes to the graphics of "Add", "Edit" and "Delete"- option buttons. They now incorporate SVG-graphics.
-
+<br></br>
+<br></br>
 Created a popup window for adding a component to a workspace. Some generalization is still needed within the
 component itself as well as in terms of creating a basic popup component which all other popups will extend.
 Currently, the popup window cannot be used to add components to the workspace in any meaningful way.
+<br></br>
+<br></br>
