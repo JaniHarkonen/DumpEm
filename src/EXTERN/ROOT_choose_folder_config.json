@@ -111,7 +111,7 @@
                 "attributes": {
                     "id": "repo-explorer",
                     "hostComponent": "choose-folder",
-                    "itemTypes": ["FOLDER", "FILE"],
+                    "itemTypes": ["FOLDER"],
 
                     "position": {
                         "x": "25%",

@@ -101,30 +101,6 @@ export default class Workspace extends ManifestComponent {
     }
 }
 
-const DeleteOptionContainer = styled.div`
-    position: absolute;
-    right: 58px;
-    top: 5px;
-    width: 48px;
-    height: 32px;
-`;
-
-const AddOptionContainer = styled.div`
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 48px;
-    height: 32px;
-`;
-
-const EditOptionContainer = styled.div`
-    position: absolute;
-    right: 106px;
-    top: 5px;
-    width: 48px;
-    height: 32px;
-`;
-
 const Content = styled.div`
     position: absolute;
     left: 0px;
@@ -132,4 +108,28 @@ const Content = styled.div`
     width: calc(100% - 4px);
     height: calc(100% - 4px);
     
+`;
+
+const DeleteOptionContainer = styled.div`
+    position: absolute;
+    right: 16px;
+    top: 0px;
+    width: 48px;
+    height: 48px;
+`;
+
+const AddOptionContainer = styled.div`
+    position: absolute;
+    right: 128px;
+    top: 0px;
+    width: 64px;
+    height: 64px;
+`;
+
+const EditOptionContainer = styled.div`
+    position: absolute;
+    right: 72px;
+    top: 0px;
+    width: 48px;
+    height: 48px;
 `;

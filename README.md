@@ -2,14 +2,11 @@
 ## TO DO
 
 # Repository tasks
-- [x] add "Back"- button for FileExplorer
-- [x] add button for repository selection
-- [x] handle opening a new repository
-- [x] handle opening the most recent repository
-- [ ] ? add a validity check for repositories in FileExplorer
+- [ ] create a popup window for "Add"-option
+- [ ] improve existing components
 
 - [ ] determine what components should be created
-- [ ] improve existing components
+- [ ] ? add a validity check for repositories in FileExplorer
 
 ## TO BE TO-DO'D
 + create more abstraction for components

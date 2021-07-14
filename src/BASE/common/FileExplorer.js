@@ -62,9 +62,9 @@ export default class FileExplorer extends ManifestComponent {
     readFolder = (path) => {
         let files = fs.readdirSync(path);
         let file_objs = files.map((file) => {
-            let is_folder = fs.lstatSync(path + "\\" + file).isDirectory();
-
             if( (path + "\\" + file).includes("System Volume Information") ) return false;
+
+            let is_folder = fs.lstatSync(path + "\\" + file).isDirectory();
             return { 
                 path: (is_folder) ? path + file + "\\" : path + "\\" + file,
                 name: file,

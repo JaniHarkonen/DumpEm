@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import iconEdit from "../../assets/icon_edit.png";
+import imgEdit from "../../assets/img_edit_circle.svg";
 
 export default class AddOption extends React.Component {
 
@@ -12,7 +12,7 @@ export default class AddOption extends React.Component {
     render() {
         return(
             <Content onClick={() => this.handleClick()}>
-                <EditIcon src={iconEdit} />
+                <EditImage src={imgEdit} />
             </Content>
         );
     }
@@ -24,16 +24,16 @@ const Content = styled.div`
     top: 0px;
     width: 100%;
     height: 100%;
-    background-color: #D8D8D8;
-    opacity: 0.5;
 
     &:hover {
-        opacity: 1.0;
+        opacity: 0.5;
     }
+
+    cursor: pointer;
 `;
 
-const EditIcon = styled.img`
-    position: relative;
+const EditImage = styled.img`
+    position: absolute;
     left: 0px;
     top: 0px;
     width: 100%;
