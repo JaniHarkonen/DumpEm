@@ -92,3 +92,6 @@ created. This requires some changes to the logic of loading external assets, nam
 ## Wednesday 14.7.2021
 Made changes to the graphics of "Add", "Edit" and "Delete"- option buttons. They now incorporate SVG-graphics.
 
+Created a popup window for adding a component to a workspace. Some generalization is still needed within the
+component itself as well as in terms of creating a basic popup component which all other popups will extend.
+Currently, the popup window cannot be used to add components to the workspace in any meaningful way.
