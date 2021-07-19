@@ -3,8 +3,10 @@
 
 # Repository tasks
 - [x] create a popup window for "Add"-option
-- [ ] improve existing components
+- [ ] create a button for adding tabs (fitted workspaces) to a tabbed viewer
+- [ ] create "Edit"-mode for workspaces
 
+- [ ] improve existing components
 - [ ] determine what components should be created
 - [ ] ? add a validity check for repositories in FileExplorer
 
@@ -108,5 +110,8 @@ Currently, the popup window cannot be used to add components to the workspace in
 Finally finished the "Add component"- popup. Users can now add components to a workspace with no modification
 of .json- files required. Full functionality was achieved, however, further testing, as well as potentially
 optimization, is required.
+<br></br>
+Added the ability to add tabs, which are just Workspaces that are fitted to the view, to a TabbedViewer.
+The functionality is still incomplete, however.
 <br></br>
 <br></br>

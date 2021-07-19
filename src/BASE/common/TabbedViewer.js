@@ -4,9 +4,13 @@ import { getComponent, nextKey } from "../Classes";
 import { jTabbedViewer } from "../Jsons";
 import ManifestComponent from "../general/ManifestComponent";
 
+import imgAdd from "../assets/img_add_circle.svg";
+import { readJson, writeJson } from "../Helpers";
+
 export default class TabbedViewer extends ManifestComponent {
     constructor(props) {
         super(props, jTabbedViewer);
+        //console.log("LOLs: " + getCurrentRepository())
     }
 
         // Changes the tab by changing the workspaces that is being rendered
@@ -14,6 +18,34 @@ export default class TabbedViewer extends ManifestComponent {
         if( this.isOptionChecked("tab-lock") ) return;
 
         this.setState({activeTab: tab});
+    }
+
+        // Adds a new tab (fitted workspaces) to the viewer
+    handleTabAddition = () => {
+        if( !this.isOptionChecked("add") ) return;
+
+        let id = "ws_tab__" + new Date().getTime();
+
+        this.state.hostReference.addComponent({
+            class: "workspace",
+            attributes: {
+                id: id,
+                name: "New tab",
+                config: "",
+                dimensions: {
+                    width: "100%",
+                    height: "100%"
+                },
+                options: ["add", "delete", "edit"]
+            }
+        });
+
+            // Add the new workspace to the configuration JSON of this component
+        let config = readJson(this.state.config);
+        config.attributes.workspaces = config.attributes.workspaces.concat(id);
+        writeJson(this.state.config, config);
+
+        this.setState({ workspaces: this.state.workspaces.concat(id) });
     }
 
         // Renders the titles of workspaces assigned to this viewer as tab labels
@@ -28,14 +60,13 @@ export default class TabbedViewer extends ManifestComponent {
             
             return(
                     <Label
-                        style= {{
-                            left: index * 10 + "%",
-                            backgroundColor: (this.state.activeTab === index) ? "#C10000" : "red"
-                        }}
+                        isActive={this.state.activeTab === index}
                         onClick={() => {this.changeTab(index);}}
                         key={nextKey()}
                     >
-                    {ws_name}
+                        <LabelCaptionContainer>
+                            {ws_name}
+                        </LabelCaptionContainer>
                     </Label>
             );
         }));
@@ -44,6 +75,7 @@ export default class TabbedViewer extends ManifestComponent {
         // Renders the workspace active in the currently displayed tab
     renderActiveTab = () => {
         if( this.state.activeTab < 0 ) return;
+        if( this.state.workspaces.length <= 0 ) return;
 
         let id = this.state.workspaces[this.state.activeTab];
         let comp = this.state.hostReference.getComponentById(id);
@@ -74,7 +106,14 @@ export default class TabbedViewer extends ManifestComponent {
                     height={this.getModifiedState(this.state.dimensions.height)}
                 >
                     {this.renderActiveTab()}
-                    {this.renderLabels()}
+
+                    <LabelContainer>
+                        {this.renderLabels()}
+                        <AddTabContainer onClick={this.handleTabAddition}>
+                            <AddTabBackground />
+                            <FullImage src={imgAdd} />
+                        </AddTabContainer>
+                    </LabelContainer>
                 </Content>
             }
             </>
@@ -88,25 +127,103 @@ const Content = styled.div`
     top: ${props => props.top};
     width: ${props => props.width};
     height: ${props => props.height};
+
+    background-color: white;
+
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+
+    border-style: solid;
+    border-width: 2px;
+    border-color: #B7B7B7;
 `;
 
 const Label = styled.div`
-    position: absolute;
-    left: 0px;
-    bottom: calc(100% - 2px);
-    width: 10%;
-    height: 32px;
-    background-color: red;
+    position: relative;
+    display: inline-block;
+    margin-left: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 25%;
+    height: 26px;
+    bottom: 4px;
+
+    background-color: white;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
+    /*border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;*/
+
+    &:hover {
+        opacity: 0.75;
+    }
+
+    ${props => !props.isActive && "opacity: 0.5;"}
+`;
+
+const LabelCaptionContainer = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: calc(100% - 1px);
+
+    user-select: none;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    opacity: 1.0;
+`;
+
+const LabelContainer = styled.div`
+    position: absolute;
+    left: -2px;
+    bottom: calc(100% - 1px);
+    width: calc(100% + 4px);
+    height: 30px;
+
+    background-color: #B7B7B7;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+`;
+
+const AddTabContainer = styled.div`
+    position: relative;
+    display: inline-block;
+    margin-left: 8px;
+    top: 50%;
+    width: 25px;
+    height: 25px;
+    transform: translateY(-50%);
+
+    cursor: pointer;
 
     &:hover {
-        opacity: 0.5;
+        opacity: 0.75;
     }
+`;
+
+const AddTabBackground = styled.div`
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+
+    background-color: white;
+    border-radius: 50%;
+    
+`;
+
+const FullImage = styled.img`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
 `;
