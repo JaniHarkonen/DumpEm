@@ -42,12 +42,12 @@ export var jHasName = { name: "" };
 /*
     A component with options.
 */
-export var jHasOptions = { options: [] }
+export var jHasOptions = { options: [] };
 
 /*
     A component with sub-components.
 */
-export var jHasComponents = { components: [] }
+export var jHasComponents = { components: [] };
 
 /*
     A component with dimensions.
@@ -63,7 +63,7 @@ export var jHasDimensions =
         width: 0,
         height: 0
     }
-}
+};
 
 /*
     Properties for workspace.
@@ -162,7 +162,7 @@ export var jButton =
 
     class: "button",
     style: ""               // Additional CSS-styling that will be applied to the button element
-}
+};
 
 /*
     Properties for Text.
@@ -178,7 +178,7 @@ export var jText =
     horizontalAlign: "flex-start",  // Horizontal alignment of the text (uses Flexbox)
     verticalAlign: "flex-start",    // Vertical alignment of the text (uses Flexbox)
     style: ""                       // Additional CSS-styling that will be applied to the text element
-}
+};
 
 /*
     Properties for Image.
@@ -190,12 +190,11 @@ export var jImage =
     class: "item-image",
     assetName: "",              // Name of the image asset that will be displayed
     style: ""                   // Additional CSS-styling that will be applied to the text element
-}
+};
 
 /*
     All jsons bundled in one.
 */
-
 export var JSONS = {
     jBasic: jBasic,
     jHasName: jHasName,
@@ -210,4 +209,165 @@ export var JSONS = {
     jButton: jButton,
     jText: jText,
     jImage: jImage
+};
+
+/*
+    Generates a configuration for a field outlined in CONFIGS- json and
+    appends given modifications to it.
+
+    ARGS:
+        mod - Modifications that are to be applied to the default configuration.
+    
+    RETURNS:
+        Default configuration with given modifications applied.
+*/
+const generateConfiguration = (mod) => {
+    return {
+        isVisible: true,
+        caption: "<NO CAPTION>",
+        isHoisted: false,
+        type: "text",
+        value: "",
+        key: -1,
+        ...mod
+    }
 }
+
+export var CONFIGS = {
+    id: generateConfiguration({
+        caption: "ID",
+        isHoisted: true,
+        value: jBasic.id
+    }),
+    class: generateConfiguration({
+        isVisible: false,
+        caption: "ID",
+        isHoisted: true,
+        value: jBasic.class
+    }),
+    config: generateConfiguration({
+        caption: "Configuration file",
+        isHoisted: true,
+        value: jBasic.config
+    }),
+    hostComponent: generateConfiguration({
+        isVisible: false,
+        caption: "Host component ID",
+        value: jBasic.hostComponent
+    }),
+    hostReference: generateConfiguration({
+        isVisible: false,
+        caption: "Reference to host",
+        type: "reference",
+        value: jBasic.hostReference
+    }),
+    this: generateConfiguration({
+        isVisible: false,
+        caption: "Reference to this",
+        type: "reference",
+        value: jBasic.this
+    }),
+    isRendered: generateConfiguration({
+        caption: "Allow rendering",
+        type: "check",
+        value: jBasic.isRendered
+    }),
+    scripts: generateConfiguration({
+        caption: "Event scripts",
+        type: "object",
+        value: jBasic.scripts
+    }),
+    variables: generateConfiguration({
+        caption: "Component variables",
+        type: "object",
+        value: jBasic.variables
+    }),
+    savedFields: generateConfiguration({
+        caption: "Saved attributes",
+        type: "object",
+        value: jBasic.savedFields
+    }),
+    name: generateConfiguration({
+        caption: "Name",
+        isHoisted: true,
+    }),
+    options: generateConfiguration({
+        caption: "Options",
+        type: "list",
+        value: []
+    }),
+    workspaces: generateConfiguration({
+        caption: "Workspaces",
+        type: "list",
+        value: []
+    }),
+    activeTab: generateConfiguration({
+        caption: "Active tab index",
+        type: "number",
+        value: 0
+    }),
+    font: generateConfiguration({
+        caption: "Font",
+        type: "text"
+    }),
+    fontSize: generateConfiguration({
+        caption: "Font height (px)",
+        type: "text"
+    }),
+    content: generateConfiguration({
+        caption: "Text content"
+    }),
+    currentFolder: generateConfiguration({
+        caption: "Current folder"
+    }),
+    defaultFolder: generateConfiguration({
+        caption: "Default folder"
+    }),
+    rootFolder: generateConfiguration({
+        caption: "Root folder"
+    }),
+    itemTypes: generateConfiguration({
+        caption: "Allowed item types",
+        type: "list",
+        value: []
+    }),
+    extensionImages: generateConfiguration({
+        caption: "Item type images",
+        type: "object",
+        value: {}
+    }),
+    style: generateConfiguration({
+        caption: "Additional CSS"
+    }),
+    horizontalAlign: generateConfiguration({
+        caption: "Horizontal alignment"
+    }),
+    verticalAlign: generateConfiguration({
+        caption: "Vertical alignment"
+    }),
+    assetName: generateConfiguration({
+        caption: "Image asset name"
+    }),
+    position: generateConfiguration({
+        caption: "Position",
+        type: "object",
+        value: {}
+    }),
+    dimensions: generateConfiguration({
+        caption: "Dimensions",
+        type: "object",
+        value: {}
+    }),
+    components: generateConfiguration({
+        isVisible: false,
+        caption: "Components",
+        type: "list",
+        value: []
+    }),
+    symbolData: generateConfiguration({
+        isVisible: false,
+        caption: "Symbols",
+        type: "list",
+        value: []
+    })
+};

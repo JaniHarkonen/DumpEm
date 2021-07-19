@@ -6,7 +6,7 @@ import imgEdit from "../../assets/img_edit_circle.svg";
 export default class AddOption extends React.Component {
 
     handleClick() {
-        this.props.hostReference.enableEditMode();
+        //this.props.hostReference.enableEditMode();
     }
 
     render() {

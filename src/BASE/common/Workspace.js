@@ -11,11 +11,11 @@ export default class Workspace extends ManifestComponent {
     constructor(props) {
         super(props, jWorkspace);
 
-        this.state.editModeEnabled = false;
+        //this.state.editModeEnabled = false;
     }
 
         // Enables edit mode
-    enableEditMode = () => {
+    /*enableEditMode = () => {
         this.setState({ editModeEnabled: true });
     }
 
@@ -35,7 +35,7 @@ export default class Workspace extends ManifestComponent {
             if( this.isBeingResized() === true ) this.stopResizing();
             else this.startResizing();
         }
-    }
+    }*/
 
         // Renders all available options for this component
     renderOptions = () => {
@@ -84,7 +84,7 @@ export default class Workspace extends ManifestComponent {
                     this.state.isRendered &&
                     <Content
                         id={this.state.id}
-                        onClick={() => {this.requestResizeBegin();}}
+                        //onClick={() => {this.requestResizeBegin();}}
                         style={{
                             left: this.state.position.x + "px",
                             top: this.state.position.y + "px",

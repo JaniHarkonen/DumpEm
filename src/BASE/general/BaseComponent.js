@@ -1,5 +1,5 @@
 import React from "react";
-import { modifyJson, readJson } from "../Helpers";
+import { modifyJson, readJson, writeJson } from "../Helpers";
 import { registerComponent } from "../ComponentRegistry";
 import { runScript as Scripts_runScript, SCRIPTS } from "../../EXTERN/Scripts";
 
@@ -131,8 +131,13 @@ export default class BaseComponent extends React.Component {
         this.setState({components: this.state.components.filter((comp) => comp.attributes.id !== id)})
     }
     
-        // Adds a given sub-component to the "components"-array
+        // Adds a given sub-component to the "components"-array as well as to this
+        // component's configuration
     addComponent = (comp) => {
+        let config = readJson(this.state.config);
+        config.attributes.components = config.attributes.components.concat(comp);
+        writeJson(this.state.config, config);
+
         this.setState({components: this.state.components.concat(comp)});
     }
 

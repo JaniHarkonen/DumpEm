@@ -50,7 +50,7 @@ export const jsonToState = (thisref, json) => {
             Parsed JSON.
 */
 export const readJson = (path) => {
-    if( path == null ) return {};
+    if( path == null || path === "" ) return {};
 
     const file = fs.readFileSync(getCurrentRepository() + path);
     return JSON.parse(file);
