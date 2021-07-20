@@ -2,13 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 import imgDelete from "../../assets/img_delete_circle.svg";
+import { deleteFile } from "../../Helpers";
 
 export default class DeleteOption extends React.Component {
 
     handleClick = () => {
-        let id = this.props.hostReference.state.id;
-        id = id.substring(id.lastIndexOf("-") + 1, id.length);
+        /*let id = this.props.hostReference.state.id;
+        id = id.substring(id.lastIndexOf("-") + 1, id.length);*/
+
+            // Remove from the host component
+        let id = this.props.hostReference.getComponentId();
         this.props.hostReference.state.hostReference.removeComponent(id);
+
+            // Remove the configuration
+        deleteFile(this.props.hostReference.state.config);
     }
 
     render() {

@@ -111,6 +111,22 @@ export const modifyJsonVanilla = (path, json) => {
 }
 
 /*
+    Removes a given file from current repository.
+
+    ARGS:
+            path    - Path to the file to be removed.
+*/
+export const deleteFile = (path) => {
+    if( path == null || path === "" ) return;
+
+    const file = getCurrentRepository() + path;
+    //console.log(file);
+    fs.unlink(file, (err) => {
+        if( err ) console.log("ERROR DELETING FILE: " + err);
+    });
+}
+
+/*
     Returns the file path to the repository currently being accessed.
 
     RETURNS:

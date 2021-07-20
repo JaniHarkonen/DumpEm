@@ -55,13 +55,13 @@ export var jHasComponents = { components: [] };
 export var jHasDimensions = 
 {
     position: { 
-        x: 0,
-        y: 0
+        x: "0px",
+        y: "0px"
     },
 
     dimensions: {
-        width: 0,
-        height: 0
+        width: "0px",
+        height: "0px"
     }
 };
 

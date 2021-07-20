@@ -86,8 +86,8 @@ export default class Workspace extends ManifestComponent {
                         id={this.state.id}
                         //onClick={() => {this.requestResizeBegin();}}
                         style={{
-                            left: this.state.position.x + "px",
-                            top: this.state.position.y + "px",
+                            left: this.state.position.x,
+                            top: this.state.position.y,
                             width: this.state.dimensions.width,
                             height: this.state.dimensions.height
                         }}

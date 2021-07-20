@@ -128,7 +128,11 @@ export default class BaseComponent extends React.Component {
 
         // Removes a sub-component with a given ID from the "components"-array
     removeComponent = (id) => {
-        this.setState({components: this.state.components.filter((comp) => comp.attributes.id !== id)})
+        let config = readJson(this.state.config);
+        config.attributes.components = config.attributes.components.filter((comp => comp.attributes.id !== id));
+        writeJson(this.state.config, config);
+
+        this.setState({components: this.state.components.filter((comp) => comp.attributes.id !== id)});
     }
     
         // Adds a given sub-component to the "components"-array as well as to this
@@ -143,6 +147,13 @@ export default class BaseComponent extends React.Component {
 
         // Reloads the component's configuration (also re-renders)
     reloadConfiguration = () => {
-        this.setState({ ...this.state, ...readJson(this.getModifiedState(this.state.config)).attributes })
+        this.setState({ ...this.state, ...readJson(this.getModifiedState(this.state.config)).attributes });
+    }
+
+        // Returns the ID of the component (without the hosts)
+    getComponentId = () => {
+        let id = this.state.id;
+        if( this.props.attributes.id != null ) return this.props.attributes.id;
+        else return id.substring(id.lastIndexOf("-") + 1, id.length);
     }
 }

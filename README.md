@@ -3,7 +3,7 @@
 
 # Repository tasks
 - [x] create a popup window for "Add"-option
-- [ ] create a button for adding tabs (fitted workspaces) to a tabbed viewer
+- [x] create a button for adding tabs (fitted workspaces) to a tabbed viewer
 - [ ] create "Edit"-mode for workspaces
 
 - [ ] improve existing components
@@ -113,5 +113,13 @@ optimization, is required.
 <br></br>
 Added the ability to add tabs, which are just Workspaces that are fitted to the view, to a TabbedViewer.
 The functionality is still incomplete, however.
+<br></br>
+<br></br>
+
+## Tuesday 20.7.2021
+Finished the functionality to add tabs to a TabbedViewer, as well as the functionality to delete workspaces
+from their host components. There is still a lot to improve here, but the goal has now been shifted to
+creating the first viable product that will function with acceptable stability and, at a bare minimum, the
+components and functionalities required to create the "Investing" -repository.
 <br></br>
 <br></br>

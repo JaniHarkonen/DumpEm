@@ -158,6 +158,8 @@ export default class AddOptionPopup extends React.Component {
             if( this.state.inputs[at].isHoisted === true ) attrib_h[at] = attrib_temp;
             else attrib_cf[at] = attrib_temp;
         }
+        
+        attrib_cf.hostComponent = this.props.hostReference.getComponentId();
 
         writeJson(attrib_h.config, { attributes: attrib_cf });
 

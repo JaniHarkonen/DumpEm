@@ -25,25 +25,39 @@ export default class TabbedViewer extends ManifestComponent {
         if( !this.isOptionChecked("add") ) return;
 
         let id = "ws_tab__" + new Date().getTime();
+        let cpath = id + ".json";
 
-        this.state.hostReference.addComponent({
+            // Contains the hoisted configuration of the tab
+        let tab_h = {
             class: "workspace",
             attributes: {
                 id: id,
                 name: "New tab",
-                config: "",
-                dimensions: {
-                    width: "100%",
-                    height: "100%"
-                },
-                options: ["add", "delete", "edit"]
+                config: cpath
             }
-        });
+        }
+
+            // Contains the configuration of the tab that will be placed in the .json
+        let tab_c = {
+            hostComponent: this.state.hostComponent,
+            isRendered: true,
+            components: [],
+            dimensions: {
+                width: "100%",
+                height: "100%"
+            },
+            options: ["add", "delete", "edit"]
+        }
+
+        this.state.hostReference.addComponent(tab_h);
 
             // Add the new workspace to the configuration JSON of this component
         let config = readJson(this.state.config);
         config.attributes.workspaces = config.attributes.workspaces.concat(id);
         writeJson(this.state.config, config);
+
+            // Create a configuration .json for the added tab
+        writeJson(cpath, { attributes: tab_c });
 
         this.setState({ workspaces: this.state.workspaces.concat(id) });
     }
@@ -52,6 +66,7 @@ export default class TabbedViewer extends ManifestComponent {
     renderLabels = () => {
         if( this.isOptionChecked("hide-tabs") ) return "";
 
+        let n_ws = this.state.workspaces.length;
         return(this.state.workspaces.map((ws, index) => {
             let ws_comp = this.state.hostReference.getComponentById(ws);
             if( ws_comp == null ) return "";
@@ -63,6 +78,7 @@ export default class TabbedViewer extends ManifestComponent {
                         isActive={this.state.activeTab === index}
                         onClick={() => {this.changeTab(index);}}
                         key={nextKey()}
+                        count={n_ws}
                     >
                         <LabelCaptionContainer>
                             {ws_name}
@@ -82,13 +98,6 @@ export default class TabbedViewer extends ManifestComponent {
 
         if( comp != null )
         return getComponent("workspace", {...comp.attributes, hostReference: this.state.hostReference});
-        else
-        {
-            this.setState({
-                workspaces: this.state.workspaces.filter((ws) => ws !== id),
-                activeTab: (this.state.workspaces.length < 1) ? -1 : 0
-            });
-        }
     }
 
 
@@ -146,15 +155,15 @@ const Label = styled.div`
     margin-left: 2px;
     padding-left: 10px;
     padding-right: 10px;
-    width: 25%;
+    width: ${props => ( 1 / (props.count) * 50 )}%;
+    max-width: 100px;
+    min-width: 32px;
     height: 26px;
     bottom: 4px;
 
     background-color: white;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    /*border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px;*/
 
     &:hover {
         opacity: 0.75;
@@ -185,6 +194,7 @@ const LabelContainer = styled.div`
     bottom: calc(100% - 1px);
     width: calc(100% + 4px);
     height: 30px;
+    
 
     background-color: #B7B7B7;
 
