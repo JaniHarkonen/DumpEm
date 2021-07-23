@@ -225,7 +225,7 @@ export default class AddOptionPopup extends React.Component {
 
         // Adds a configuration item to an object of configurations
     handleConfigurationAdditionObject = (ref, deflt) => {
-        ref.value = ref.value.concat(deflt);
+        ref.value = ref.value.concat((ref.type === "list") ? deflt.value : deflt);
         this.setState({ inputs: this.state.inputs });
     }
 

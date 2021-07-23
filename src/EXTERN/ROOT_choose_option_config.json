@@ -179,8 +179,8 @@
         "options": [],
 
         "position": {
-            "x": 0,
-            "y": 0
+            "x": "0px",
+            "y": "0px"
         },
 
         "dimensions": {

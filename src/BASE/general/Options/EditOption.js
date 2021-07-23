@@ -1,18 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-import imgEdit from "../../assets/img_edit_circle.svg";
-
 export default class AddOption extends React.Component {
 
     handleClick() {
-        //this.props.hostReference.enableEditMode();
+        this.props.hostReference.toggleEditModeForSubcomponents();
     }
 
     render() {
         return(
-            <Content onClick={() => this.handleClick()}>
-                <EditImage src={imgEdit} />
+            <Content
+                onClick={() => this.handleClick()}
+                addStyle={this.props.addStyle}
+            >
+                <EditImage src={this.props.imgEdit} />
             </Content>
         );
     }
@@ -30,6 +31,9 @@ const Content = styled.div`
     }
 
     cursor: pointer;
+    user-select: none;
+
+    ${props => props.addStyle}
 `;
 
 const EditImage = styled.img`

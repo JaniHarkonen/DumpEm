@@ -2,9 +2,9 @@
 ## TO DO
 
 # Repository tasks
-- [x] create a popup window for "Add"-option
-- [x] create a button for adding tabs (fitted workspaces) to a tabbed viewer
-- [ ] create "Edit"-mode for workspaces
+- [ ] re-write SymbolList for minimum viable product
+- [ ] add/refine edit mode for/of other components
+
 
 - [ ] improve existing components
 - [ ] determine what components should be created
@@ -123,3 +123,10 @@ creating the first viable product that will function with acceptable stability a
 components and functionalities required to create the "Investing" -repository.
 <br></br>
 <br></br>
+
+## Saturday 24.7.2021
+Very basic "Edit"- mode has been added to workspaces allowing components within to be moved around. The
+positions will NOT, however, be saved in the configuration file making the mode mostly useless as of now.
+The development will now be focused on the symbol list as this is the final component that will need major
+changes for the first viable prodcut. After this, "Edit"- modes for other components have to be
+added/refined before the minimum viable product can be released. 

@@ -48,6 +48,7 @@ const Content = styled.div`
     }
 
     cursor: pointer;
+    user-select: none;
 `;
 
 const AddImage = styled.img`

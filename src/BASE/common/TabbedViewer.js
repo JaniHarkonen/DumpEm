@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { getComponent, nextKey } from "../Classes";
 import { jTabbedViewer } from "../Jsons";
 import ManifestComponent from "../general/ManifestComponent";
+import EditOption from "../general/Options/EditOption";
+import EditOutline from "../general/Options/Edit/EditOutline";
 
 import imgAdd from "../assets/img_add_circle.svg";
 import { readJson, writeJson } from "../Helpers";
@@ -10,7 +12,6 @@ import { readJson, writeJson } from "../Helpers";
 export default class TabbedViewer extends ManifestComponent {
     constructor(props) {
         super(props, jTabbedViewer);
-        //console.log("LOLs: " + getCurrentRepository())
     }
 
         // Changes the tab by changing the workspaces that is being rendered
@@ -64,7 +65,7 @@ export default class TabbedViewer extends ManifestComponent {
 
         // Renders the titles of workspaces assigned to this viewer as tab labels
     renderLabels = () => {
-        if( this.isOptionChecked("hide-tabs") ) return "";
+        //if(  ) return "";
 
         let n_ws = this.state.workspaces.length;
         return(this.state.workspaces.map((ws, index) => {
@@ -88,6 +89,35 @@ export default class TabbedViewer extends ManifestComponent {
         }));
     }
 
+        // Renders all available options
+    renderOptions = () => {
+        if( this.state.options.length <= 0 ) return "";
+
+        return this.state.options.map((opt) => {
+            switch( opt )
+            {
+                case "edit":
+                    if( this.state.editModeEnabled === true )
+                    {
+                        return(
+                            <EditOptionContainer key={nextKey()}>
+                                <EditOption
+                                    hostReference={this}
+                                    imgEdit={this.state.ManifestComponent.imgEditSquare}
+                                    addStyle={"opacity: 0.5; &:hover { opacity: 1; }"}
+                                />
+                            </EditOptionContainer>
+                        );
+                    }
+                    break;
+                
+                default: return "";
+            }
+
+            return "";
+        });
+    }
+
         // Renders the workspace active in the currently displayed tab
     renderActiveTab = () => {
         if( this.state.activeTab < 0 ) return;
@@ -97,7 +127,7 @@ export default class TabbedViewer extends ManifestComponent {
         let comp = this.state.hostReference.getComponentById(id);
 
         if( comp != null )
-        return getComponent("workspace", {...comp.attributes, hostReference: this.state.hostReference});
+        return getComponent("workspace", { ...comp.attributes, hostReference: this.state.hostReference });
     }
 
 
@@ -109,20 +139,39 @@ export default class TabbedViewer extends ManifestComponent {
                 this.state.isRendered &&
                 <Content
                     id={this.state.id}
-                    left={this.getModifiedState(this.state.position.x)}
-                    top={this.getModifiedState(this.state.position.y)}
-                    width={this.getModifiedState(this.state.dimensions.width)}
-                    height={this.getModifiedState(this.state.dimensions.height)}
+                    drawBorders={!this.isOptionChecked("hide-border")}
+                    style={{
+                        left: this.getModifiedState(this.state.position.x),
+                        top: `calc(${this.getModifiedState(this.state.position.y)} + 30px)`,
+                        width: this.getModifiedState(this.state.dimensions.width),
+                        height: `calc(${this.getModifiedState(this.state.dimensions.height)} - 30px)`
+                    }}
                 >
                     {this.renderActiveTab()}
 
-                    <LabelContainer>
-                        {this.renderLabels()}
-                        <AddTabContainer onClick={this.handleTabAddition}>
-                            <AddTabBackground />
-                            <FullImage src={imgAdd} />
-                        </AddTabContainer>
-                    </LabelContainer>
+                    {
+                        (!this.isOptionChecked("hide-tabs") && !this.isOptionChecked("hide-border")) &&
+                        <LabelContainer>
+                            {this.renderLabels()}
+                            <AddTabContainer onClick={this.handleTabAddition}>
+                                <AddTabBackground />
+                                <FullImage src={imgAdd} />
+                            </AddTabContainer>
+                        </LabelContainer>
+                    }
+
+                    {this.renderOptions()}
+
+                    {
+                        this.state.editModeEnabled &&
+                        <EditOutlineContainer>
+                            <EditOutline
+                                padding={2}
+                                dragStartHook={this.startDragging}
+                                dragStopHook={this.stopDragging}
+                            />
+                        </EditOutlineContainer>
+                    }
                 </Content>
             }
             </>
@@ -132,21 +181,19 @@ export default class TabbedViewer extends ManifestComponent {
 
 const Content = styled.div`
     position: absolute;
-    left: ${props => props.left};
-    top: ${props => props.top};
-    width: ${props => props.width};
-    height: ${props => props.height};
-
     background-color: white;
 
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    ${props => props.drawBorders &&
+        ("border-bottom-left-radius: 6px;"+
+        "border-bottom-right-radius: 6px;"+
+        "border-top-left-radius: 4px;"+
+        "border-top-right-radius: 4px;"+
 
-    border-style: solid;
-    border-width: 2px;
-    border-color: #B7B7B7;
+        "border-style: solid;"+
+        "border-width: 2px;"+
+        "border-color: #B7B7B7;")
+    }
+    user-select: none;
 `;
 
 const Label = styled.div`
@@ -194,7 +241,6 @@ const LabelContainer = styled.div`
     bottom: calc(100% - 1px);
     width: calc(100% + 4px);
     height: 30px;
-    
 
     background-color: #B7B7B7;
 
@@ -236,4 +282,20 @@ const FullImage = styled.img`
     top: 0px;
     width: 100%;
     height: 100%;
+`;
+
+const EditOptionContainer = styled.div`
+    position: absolute;
+    left: calc(100% + 2px);
+    bottom: calc(100% + 30px);
+    width: 32px;
+    height: 32px;
+`;
+
+const EditOutlineContainer = styled.div`
+    position: absolute;
+    left: 0px;
+    top: -28px;
+    right: 0px;
+    bottom: 0px;
 `;

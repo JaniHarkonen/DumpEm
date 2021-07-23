@@ -1,6 +1,6 @@
 import React from "react";
 import { modifyJson, readJson, writeJson } from "../Helpers";
-import { registerComponent } from "../ComponentRegistry";
+import { getComponentById as CREG_getComponentById, registerComponent } from "../ComponentRegistry";
 import { runScript as Scripts_runScript, SCRIPTS } from "../../EXTERN/Scripts";
 
 
@@ -81,6 +81,11 @@ export default class BaseComponent extends React.Component {
         for( let c of this.state.components ) if( c.attributes.id === id ) return c;
 
         return null;
+    }
+
+        // Returns a list of references of all subcomponents
+    getAllComponentReferences = () => {
+        return this.state.components.map((c) => CREG_getComponentById(this.state.id + "-" + c.attributes.id));
     }
 
         /* 

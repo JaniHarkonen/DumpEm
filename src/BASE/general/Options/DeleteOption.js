@@ -7,8 +7,6 @@ import { deleteFile } from "../../Helpers";
 export default class DeleteOption extends React.Component {
 
     handleClick = () => {
-        /*let id = this.props.hostReference.state.id;
-        id = id.substring(id.lastIndexOf("-") + 1, id.length);*/
 
             // Remove from the host component
         let id = this.props.hostReference.getComponentId();
@@ -39,6 +37,7 @@ const Content = styled.div`
     }
 
     cursor: pointer;
+    user-select: none;
 `;
 
 const DeleteImage = styled.img`

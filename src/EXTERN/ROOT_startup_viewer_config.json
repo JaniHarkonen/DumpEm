@@ -17,7 +17,7 @@
 
         },
 
-        "options": ["hide-tabs"],
+        "options": ["hide-tabs", "hide-border"],
         
         "position": {
             "x": "0px",
