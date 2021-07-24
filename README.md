@@ -130,6 +130,8 @@ positions will NOT, however, be saved in the configuration file making the mode 
 The development will now be focused on the symbol list as this is the final component that will need major
 changes for the first viable prodcut. After this, "Edit"- modes for other components have to be
 added/refined before the minimum viable product can be released.
+<br></br>
+<br></br>
 
 ## Sunday 25.7.2021
 Component's position and dimensions are now stored in the configuration file after being changed through
