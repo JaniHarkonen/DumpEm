@@ -114,7 +114,7 @@ export default class BaseComponent extends React.Component {
 
         // Saves the attributes of the component to its config file
     saveConfiguration = (save_event) => {
-        let config = this.getModifiedState(this.state.config);
+        let config = this.state.config;
         if( config == null || config === "" ) return;
         if( save_event == null || save_event === "" ) return;
         let fields = this.state.savedFields[save_event];

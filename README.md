@@ -2,7 +2,7 @@
 ## TO DO
 
 # Repository tasks
-- [ ] re-write SymbolList for minimum viable product
+- [x] re-write SymbolList for minimum viable product
 - [ ] add/refine edit mode for/of other components
 
 
@@ -129,4 +129,10 @@ Very basic "Edit"- mode has been added to workspaces allowing components within 
 positions will NOT, however, be saved in the configuration file making the mode mostly useless as of now.
 The development will now be focused on the symbol list as this is the final component that will need major
 changes for the first viable prodcut. After this, "Edit"- modes for other components have to be
-added/refined before the minimum viable product can be released. 
+added/refined before the minimum viable product can be released.
+
+## Sunday 25.7.2021
+Component's position and dimensions are now stored in the configuration file after being changed through
+edit mode. SymbolList has now been mostly re-written with symbols that can display 4 data points in one
+element. Symbols also have color codes that can be changed, however codes are not yet stored in the
+configuration.

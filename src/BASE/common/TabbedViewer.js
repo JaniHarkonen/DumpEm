@@ -5,9 +5,10 @@ import { jTabbedViewer } from "../Jsons";
 import ManifestComponent from "../general/ManifestComponent";
 import EditOption from "../general/Options/EditOption";
 import EditOutline from "../general/Options/Edit/EditOutline";
+import { readJson, writeJson } from "../Helpers";
 
 import imgAdd from "../assets/img_add_circle.svg";
-import { readJson, writeJson } from "../Helpers";
+import imgDuplicate from "../assets/img_duplicate.svg";
 
 export default class TabbedViewer extends ManifestComponent {
     constructor(props) {
@@ -65,8 +66,6 @@ export default class TabbedViewer extends ManifestComponent {
 
         // Renders the titles of workspaces assigned to this viewer as tab labels
     renderLabels = () => {
-        //if(  ) return "";
-
         let n_ws = this.state.workspaces.length;
         return(this.state.workspaces.map((ws, index) => {
             let ws_comp = this.state.hostReference.getComponentById(ws);
@@ -153,10 +152,18 @@ export default class TabbedViewer extends ManifestComponent {
                         (!this.isOptionChecked("hide-tabs") && !this.isOptionChecked("hide-border")) &&
                         <LabelContainer>
                             {this.renderLabels()}
-                            <AddTabContainer onClick={this.handleTabAddition}>
+
+                            <TabOptionContainer onClick={this.handleTabAddition}>
                                 <AddTabBackground />
                                 <FullImage src={imgAdd} />
-                            </AddTabContainer>
+                            </TabOptionContainer>
+
+                            <TabOptionContainer>
+                                <DuplicateTabImageContainer>
+                                    <DuplicateTabBackground />
+                                    <FullImage src={imgDuplicate} />
+                                </DuplicateTabImageContainer>
+                            </TabOptionContainer>
                         </LabelContainer>
                     }
 
@@ -169,6 +176,8 @@ export default class TabbedViewer extends ManifestComponent {
                                 padding={2}
                                 dragStartHook={this.startDragging}
                                 dragStopHook={this.stopDragging}
+                                resizeStartHook={this.startResizing}
+                                resizeStopHook={this.stopResizing}
                             />
                         </EditOutlineContainer>
                     }
@@ -248,7 +257,8 @@ const LabelContainer = styled.div`
     border-top-right-radius: 8px;
 `;
 
-const AddTabContainer = styled.div`
+
+const TabOptionContainer = styled.div`
     position: relative;
     display: inline-block;
     margin-left: 8px;
@@ -273,7 +283,25 @@ const AddTabBackground = styled.div`
 
     background-color: white;
     border-radius: 50%;
-    
+`;
+
+const DuplicateTabBackground = styled.div`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+
+    background-color: white;
+    border-radius: 3px;
+`;
+
+const DuplicateTabImageContainer = styled.div`
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    right: 2px;
+    bottom: 2px;
 `;
 
 const FullImage = styled.img`

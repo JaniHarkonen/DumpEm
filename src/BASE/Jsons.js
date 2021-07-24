@@ -30,7 +30,8 @@ export var jBasic =
 
         // Groups of fields that will be saved on different events
     savedFields: {
-
+        onDrag: ["position"],
+        onResize: ["dimensions"]
     }
 };
 
@@ -100,6 +101,7 @@ export var jSymbolList =
     ...jHasOptions,         // Array of strings representing options that are enabled for the user
     ...jHasDimensions,      // The position and the dimensions of the list
     class: "symbol-list",
+    caption: "",            // Caption that will be displayed on top of the list
     symbolData: [],         // Ticker data assigned to the symbols displayed on this list
 };
 
@@ -369,5 +371,8 @@ export var CONFIGS = {
         caption: "Symbols",
         type: "list",
         value: []
+    }),
+    caption: generateConfiguration({
+        caption: "Caption"
     })
 };

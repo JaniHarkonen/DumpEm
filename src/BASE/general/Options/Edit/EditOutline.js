@@ -2,38 +2,48 @@ import React from "react";
 import styled from "styled-components";
 
 export default class EditOutline extends React.Component {
-    handleResizeClick = () => {
-        console.log("lol")
+
+        // Set a mouse listener for left button release for smoother dragging
+    componentDidMount() {
+        document.addEventListener("mouseup", this.props.resizeStopHook);
     }
 
+        // Remove listeners
+    componentWillUnmount() {
+        document.removeEventListener("mouseup", this.props.resizeStopHook);
+    }
+
+        // Called upon clicking a resize handle
+    handleResizeClick = () => {
+        this.props.resizeStartHook();
+    }
+
+        // Begins dragging upon clicking the element
     handleElementClick = (e) => {
         if( e.target.id.includes("edit-selection-outline-resize") ) return;
         this.props.dragStartHook();
     }
 
+        // Renders a single resize handle
+    resizeHandleElement = (id, at) => {
+        return(
+            <ResizeHandle
+                id={id}
+                at={at}
+                onMouseDown={this.handleResizeClick}
+                outlineColor={this.props.outlineColor || "black"}
+            />
+        )
+    }
+
+        // Renders resize handles at the corners of the element
     renderResizeHandles = () => {
         return(
             <>
-                <ResizeHandle
-                    id="edit-selection-outline-resize-tl"
-                    at={{x: 0, y: 0}}
-                    onMouseDown={this.handleResizeClick}
-                />
-                <ResizeHandle
-                    id="edit-selection-outline-resize-tr"
-                    at={{x: 1, y: 0}}
-                    onMouseDown={this.handleResizeClick}
-                />
-                <ResizeHandle
-                    id="edit-selection-outline-resize-bl"
-                    at={{x: 0, y: 1}}
-                    onMouseDown={this.handleResizeClick}
-                />
-                <ResizeHandle
-                    id="edit-selection-outline-resize-br"
-                    at={{x: 1, y: 1}}
-                    onMouseDown={this.handleResizeClick}
-                />
+                {this.resizeHandleElement("edit-selection-outline-resize-tl", {x: 0, y: 0})}
+                {this.resizeHandleElement("edit-selection-outline-resize-tr", {x: 1, y: 0})}
+                {this.resizeHandleElement("edit-selection-outline-resize-bl", {x: 0, y: 1})}
+                {this.resizeHandleElement("edit-selection-outline-resize-br", {x: 1, y: 1})}
             </>
         )
     }
@@ -47,6 +57,7 @@ export default class EditOutline extends React.Component {
                 onMouseUp={() => {
                     this.props.dragStopHook();
                 }}
+                outlineColor={this.props.outlineColor || "black"}
             >
                 {this.renderResizeHandles()}
             </Content>
@@ -63,6 +74,7 @@ const Content = styled.div`
 
     border-style: dashed;
     border-width: 1px;
+    border-color: ${props => props.outlineColor};
 
     opacity: 0;
 
@@ -79,5 +91,5 @@ const ResizeHandle = styled.div`
     width: ${resizeHandleSize}px;
     height: ${resizeHandleSize}px;
 
-    background-color: black;
+    background-color: ${props => props.outlineColor};
 `;
