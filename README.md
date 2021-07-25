@@ -3,7 +3,8 @@
 
 # Repository tasks
 - [x] re-write SymbolList for minimum viable product
-- [ ] add/refine edit mode for/of other components
+- [x] add edit mode for other components
+- [ ] refine edit mode of other components
 
 
 - [ ] improve existing components
@@ -138,3 +139,6 @@ Component's position and dimensions are now stored in the configuration file aft
 edit mode. SymbolList has now been mostly re-written with symbols that can display 4 data points in one
 element. Symbols also have color codes that can be changed, however codes are not yet stored in the
 configuration.
+
+## Sunday 25.7.2021
+Added edit mode to TextItem, ImageItem and Note.

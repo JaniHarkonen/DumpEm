@@ -112,6 +112,7 @@ export var jNote =
 {
     ...jBasic,
     ...jHasDimensions,      // The position and the dimensions fo the note
+    ...jHasOptions,
     class: "note",
     font: "Arial",          // Name of the font family the note text will be drawn in
     fontSize: "16px",       // Height of the font in pixels
@@ -173,6 +174,7 @@ export var jText =
 {
     ...jBasic,
     ...jHasDimensions,              // NOTE: The position will be relative to the host component
+    ...jHasOptions, 
     class: "item-text",
     content: "",                    // Text content that will be displayed
     font: "Arial",                  // Name of the font family the text will be draw in
@@ -189,6 +191,7 @@ export var jImage =
 {
     ...jBasic,
     ...jHasDimensions,          // NOTE: The position will be relative to the host component
+    ...jHasOptions,
     class: "item-image",
     assetName: "",              // Name of the image asset that will be displayed
     style: ""                   // Additional CSS-styling that will be applied to the text element

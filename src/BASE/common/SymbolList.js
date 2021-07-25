@@ -17,7 +17,10 @@ export default class SymbolList extends ManifestComponent {
             this.state.symbolData.map((symb) => {
                 return(
                     <SymbolElementContainer key={nextKey()}>
-                        <SymbolElement key={nextKey()} symbolData={symb} />
+                        <SymbolElement
+                            key={nextKey()} symbolData={symb}
+                            hostReference={this}
+                        />
                     </SymbolElementContainer>
                 );
             })
