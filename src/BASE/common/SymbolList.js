@@ -11,6 +11,18 @@ export default class SymbolList extends ManifestComponent {
         super(props, jSymbolList);
     }
 
+
+
+        // Adds an entry/entries to the symbol list
+    addEntry = (ent) => {
+        let entries = this.state.symbolData.concat(ent);
+        this.setState({
+            symbolData: entries
+        }, () => {
+            this.saveConfiguration("onAddition");
+        });
+    }
+
         // Renders all the symbols provided to this symbol list.
     renderSymbols() {
         return(
@@ -18,7 +30,8 @@ export default class SymbolList extends ManifestComponent {
                 return(
                     <SymbolElementContainer key={nextKey()}>
                         <SymbolElement
-                            key={nextKey()} symbolData={symb}
+                            key={nextKey()}
+                            symbolData={symb}
                             hostReference={this}
                         />
                     </SymbolElementContainer>
@@ -41,7 +54,7 @@ export default class SymbolList extends ManifestComponent {
                         height: this.getModifiedState(this.state.dimensions.height)
                     }}
                 >
-                    <Caption>
+                    <Caption onClick={this.testtest}>
                         <b>{this.getModifiedState(this.state.caption)}</b>
                     </Caption>
 

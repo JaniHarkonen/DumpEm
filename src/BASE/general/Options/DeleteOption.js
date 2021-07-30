@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import imgDelete from "../../assets/img_delete_circle.svg";
+import imgDelete from "../../assets/img_delete_circle_black.svg";
 import { deleteFile } from "../../Helpers";
 
 export default class DeleteOption extends React.Component {
@@ -32,8 +32,10 @@ const Content = styled.div`
     width: 100%;
     height: 100%;
 
+    opacity: 0.5;
+
     &:hover {
-        opacity: 0.5;
+        opacity: 1;
     }
 
     cursor: pointer;

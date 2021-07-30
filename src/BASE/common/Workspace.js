@@ -80,30 +80,28 @@ const Content = styled.div`
     top: 0px;
     width: calc(100% - 4px);
     height: calc(100% - 4px);
-    //border-style: solid;
-    //border-width: 1px;
-`;
-
-const DeleteOptionContainer = styled.div`
-    position: absolute;
-    right: 16px;
-    top: 0px;
-    width: 48px;
-    height: 48px;
 `;
 
 const AddOptionContainer = styled.div`
     position: absolute;
-    right: 128px;
-    top: 0px;
-    width: 64px;
-    height: 64px;
+    right: 8px;
+    top: 8px;
+    width: 36px;
+    height: 36px;
 `;
 
 const EditOptionContainer = styled.div`
     position: absolute;
-    right: 72px;
-    top: 0px;
-    width: 48px;
-    height: 48px;
+    right: 8px;
+    top: 48px;
+    width: 36px;
+    height: 36px;
+`;
+
+const DeleteOptionContainer = styled.div`
+    position: absolute;
+    right: 8px;
+    top: 88px;
+    width: 36px;
+    height: 36px;
 `;

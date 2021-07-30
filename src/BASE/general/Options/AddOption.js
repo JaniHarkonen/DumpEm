@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import AddOptionPopup from "./Add/AddOptionPopup";
 
-import imgAdd from "../../assets/img_add_circle.svg";
+import imgAdd from "../../assets/img_add_circle_black.svg";
 
 export default class AddOption extends React.Component {
     constructor(props) {
@@ -43,8 +43,10 @@ const Content = styled.div`
     width: 100%;
     height: 100%;
 
+    opacity: 0.5;
+
     &:hover {
-        opacity: 0.5;
+        opacity: 1;
     }
 
     cursor: pointer;

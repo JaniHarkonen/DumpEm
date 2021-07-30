@@ -2,10 +2,7 @@
 ## TO DO
 
 # Repository tasks
-- [x] re-write SymbolList for minimum viable product
-- [x] add edit mode for other components
 - [ ] refine edit mode of other components
-
 
 - [ ] improve existing components
 - [ ] determine what components should be created
@@ -139,6 +136,12 @@ Component's position and dimensions are now stored in the configuration file aft
 edit mode. SymbolList has now been mostly re-written with symbols that can display 4 data points in one
 element. Symbols also have color codes that can be changed, however codes are not yet stored in the
 configuration.
-
-## Sunday 25.7.2021
+<br></br>
 Added edit mode to TextItem, ImageItem and Note.
+
+## Friday 30.7.2021
+Added "Edit"- mode for remaining components. Workspace options have now been grafically reworked. The
+focus is going to be on creating the minimum viable product that is capable of creating a stock analysis
+repository with relative ease.
+<br></br>
+<br></br>

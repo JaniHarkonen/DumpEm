@@ -9,6 +9,7 @@ import { readJson, writeJson } from "../Helpers";
 
 import imgAdd from "../assets/img_add_circle.svg";
 import imgDuplicate from "../assets/img_duplicate.svg";
+import EditComponentOption from "../general/Options/EditComponentOption";
 
 export default class TabbedViewer extends ManifestComponent {
     constructor(props) {
@@ -64,6 +65,17 @@ export default class TabbedViewer extends ManifestComponent {
         this.setState({ workspaces: this.state.workspaces.concat(id) });
     }
 
+        // Updates the name of a workspace in the host component
+    updateTabName = (index, e) => {
+        let comps = this.state.hostReference.state.components;
+        let comp = comps.find(elem => elem.attributes.id === this.state.workspaces[index]);
+        
+        if( comp == null ) return;
+
+        comp.attributes.name = e.target.value;
+        this.state.hostReference.setState({ components: comps });
+    }
+
         // Renders the titles of workspaces assigned to this viewer as tab labels
     renderLabels = () => {
         let n_ws = this.state.workspaces.length;
@@ -76,13 +88,11 @@ export default class TabbedViewer extends ManifestComponent {
             return(
                     <Label
                         isActive={this.state.activeTab === index}
-                        onClick={() => {this.changeTab(index);}}
+                        onClick={() => { this.changeTab(index) }}
                         key={nextKey()}
                         count={n_ws}
                     >
-                        <LabelCaptionContainer>
-                            {ws_name}
-                        </LabelCaptionContainer>
+                        <LabelCaptionContainer>{ws_name}</LabelCaptionContainer>
                     </Label>
             );
         }));
@@ -171,14 +181,22 @@ export default class TabbedViewer extends ManifestComponent {
 
                     {
                         this.state.editModeEnabled &&
-                        <EditOutlineContainer>
-                            <EditOutline
-                                padding={2}
-                                dragStartHook={this.startDragging}
-                                dragStopHook={this.stopDragging}
-                                resizeStartHook={this.startResizing}
-                                resizeStopHook={this.stopResizing}
-                            />
+                        <EditOutlineContainer
+                            style={(!this.state.contentEditModeEnabled) ? { height: "0px" } : {}}
+                        >
+                            {
+                                <EditOutline
+                                    padding={2}
+                                    dragStartHook={this.startDragging}
+                                    dragStopHook={this.stopDragging}
+                                    resizeStartHook={this.startResizing}
+                                    resizeStopHook={this.stopResizing}
+                                />
+                            }
+
+                            <EditComponentOptionContainer>
+                                <EditComponentOption />
+                            </EditComponentOptionContainer>
                         </EditOutlineContainer>
                     }
                 </Content>
@@ -326,4 +344,12 @@ const EditOutlineContainer = styled.div`
     top: -28px;
     right: 0px;
     bottom: 0px;
+`;
+
+const EditComponentOptionContainer = styled.div`
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 32px;
+    height: 32px;
 `;

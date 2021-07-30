@@ -11,7 +11,7 @@ export default class Note extends ManifestComponent {
 
         // Updates the content of the note based on input
     updateNoteContent = (e) => {
-        this.setState({content: e.target.value})
+        this.setState({ content: e.target.value })
     }
 
         // Stores the potentially updated input of the note in its host component
@@ -33,6 +33,7 @@ export default class Note extends ManifestComponent {
                         width: this.getModifiedState(this.state.dimensions.width),
                         height: this.getModifiedState(this.state.dimensions.height)
                     }}
+                    onClick={this.testtest}
                 >
                     <NoteInput
                         style={{
@@ -44,7 +45,7 @@ export default class Note extends ManifestComponent {
                                             : this.getModifiedState(this.state.color) || "#FFF5C6"
                         }}
                         onChange={this.updateNoteContent}
-                        value={this.state.content}
+                        value={this.state.content || ""}
                     />
 
                     {

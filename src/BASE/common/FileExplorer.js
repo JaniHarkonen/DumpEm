@@ -4,6 +4,7 @@ import { jFileExplorer } from "../Jsons";
 import ManifestComponent from "../general/ManifestComponent";
 import { getCurrentRepository } from "../Helpers";
 import { nextKey } from "../Classes";
+import EditOutline from "../general/Options/Edit/EditOutline";
 
 // Graphics imports
 import imgFileExpFile from "../../BASE/assets/img_file_text.svg";
@@ -100,8 +101,10 @@ export default class FileExplorer extends ManifestComponent {
 
         // Moves the explorer back one folder from the given one
     moveBack = (path) => {
+        if( this.state.currentFolder === this.state.rootFolder ) return;
+
         let next = pathModule.join(path, "../");
-        this.moveToFolder(next)
+        this.moveToFolder(next);
     }
 
         // Called upon clicking a file system element (file/folder)
@@ -186,6 +189,19 @@ export default class FileExplorer extends ManifestComponent {
                     </FolderSelectionButtonImageContainer>
                     <FolderSelectionTextContainer>Select</FolderSelectionTextContainer>
                 </FolderSelectionButton>
+
+                {
+                    this.state.editModeEnabled &&
+                    <EditOutlineContainer>
+                        <EditOutline
+                            padding={2}
+                            dragStartHook={this.startDragging}
+                            dragStopHook={this.stopDragging}
+                            resizeStartHook={this.startResizing}
+                            resizeStopHook={this.stopResizing}
+                        />
+                    </EditOutlineContainer>
+                }
             </Content>
         );
     }
@@ -372,4 +388,12 @@ const FileEntryInfoContainer = styled.div`
     height: 100%;
     align-items: center;
     padding-left: 15px;
+`;
+
+const EditOutlineContainer = styled.div`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
 `;

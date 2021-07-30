@@ -30,6 +30,7 @@ export default class ManifestComponent extends BaseComponent {
         }
 
         this.state.editModeEnabled = false;
+        this.state.contentEditModeEnabled = false;
     }
 
         // Performs addition on two sets of 2D-coordinates represented by JSONs
@@ -183,6 +184,21 @@ export default class ManifestComponent extends BaseComponent {
         // Toggles edit mode
     toggleEditMode = () => {
         this.setState({ editModeEnabled: !this.state.editModeEnabled });
+    }
+
+        // Hides the selection area allowing contents to be edited
+    enableContentEditMode = () => {
+        this.setState({ contentEditModeEnabled: true });
+    }
+
+        // Stops editing the contents of the component
+    disableContentEditMode = () => {
+        this.setState({ contentEditModeEnabled: false });
+    }
+
+        // Toggles editing of content
+    toggleContentEditMode = () => {
+        this.setState({ contentEditModeEnabled: !this.state.contentEditModeEnabled });
     }
 
         // Enable edit mode for subcomponents

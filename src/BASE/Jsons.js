@@ -103,6 +103,10 @@ export var jSymbolList =
     class: "symbol-list",
     caption: "",            // Caption that will be displayed on top of the list
     symbolData: [],         // Ticker data assigned to the symbols displayed on this list
+    savedFields: {
+        ...jBasic.savedFields,
+        onAddition: ["symbolData"]
+    }
 };
 
 /*
