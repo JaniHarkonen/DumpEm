@@ -60,6 +60,7 @@ SCRIPTS.scrSelectMostRecent = () => {
 
 SCRIPTS.scrExtractSymbolData = () => {
     let comp = getComponentById("workspace_2021__1-ws_tab__1627239518953-symbol_list__1627245422733");
+    if( comp == null ) return;
 
     if( comp == null || comp.state.symbolData.length > 0 ) return;
 
@@ -84,7 +85,7 @@ SCRIPTS.scrExtractSymbolData = () => {
 
         for( let i = 0; i < 4; i++ ) index = file.indexOf(tag, index) + tag.length;
 
-        symbol.volume = "€" + file.substring(index, file.indexOf("<", index)) + " ";
+        symbol.volume = file.substring(index, file.indexOf("<", index)) + " ";
         tag = "<span class=\"thinsp faux\"></span>";
 
             // Find the remaining parts of the volume
@@ -96,15 +97,45 @@ SCRIPTS.scrExtractSymbolData = () => {
 
         symbols.push({
             data: [
-                symbol.name,
-                symbol.volume,
-                symbol.ticker
-            ]
+                { dataPoint: symbol.name, visible: true },
+                { dataPoint: "€ " + symbol.volume, visible: true },
+                { dataPoint: symbol.ticker, visible: true }
+            ],
+            color: (parseInt(symbol.volume.replaceAll(" ", "")) > 25000) ? "#93FF66" : "#FFA8A8"
         });
+
         index = next_index - 1;
 
         if( next_index < 0 ) break;
-
         comp.addEntry(symbols);
     }
+}
+
+SCRIPTS.scrDeriveSymbolsFromList = (args) => {
+    if( args == null || args.length < 3 ) return;
+    let arg_comp_src = args[0] || null;
+    let arg_comp_dest = args[1] || null;
+    let arg_excl = args[2] || null;
+
+    if( arg_excl == null ) return;
+    let comp_src = getComponentById(arg_comp_src);
+    let comp_dest = getComponentById(arg_comp_dest);
+
+    if( comp_dest.state.symbolData.length > 0 ) return;
+    if( comp_src == null ) return;
+    if( comp_dest == null ) return;
+
+    let symbols = [];
+    for( let s of comp_src.state.symbolData )
+    if( s.color !== arg_excl ) symbols.push({ data: s.data, color: null });
+
+    comp_dest.addEntry(symbols);
+}
+
+SCRIPTS.scrGetFirstPhaseSymbols = () => {
+    SCRIPTS.scrDeriveSymbolsFromList([
+        "workspace_2021__1-ws_tab__1627239518953-symbol_list__1627245422733",
+        "workspace_2021__1-ws_tab__1627239838495-symbol_list__1627663811781",
+        "#93FF66"
+    ]);
 }

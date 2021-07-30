@@ -6,7 +6,7 @@ import { getCurrentRepository } from "../Helpers";
 import { nextKey } from "../Classes";
 import EditOutline from "../general/Options/Edit/EditOutline";
 
-// Graphics imports
+    // Graphics imports
 import imgFileExpFile from "../../BASE/assets/img_file_text.svg";
 import imgFileExpFolder from "../../BASE/assets/img_folder_black.svg";
 import imgCurrentFolder from "../../BASE/assets/img_folder_white.svg";
@@ -90,6 +90,7 @@ export default class FileExplorer extends ManifestComponent {
         // Moves the explorer to a given folder (returns false upon fail, true upon success)
     moveToFolder = (path) => {
         if( path == null || path === "" ) return false;
+        if( !this.isOptionChecked("allow-move") ) return;
 
         this.setState({
             currentFolder: path,
@@ -145,6 +146,30 @@ export default class FileExplorer extends ManifestComponent {
         );
     }
 
+        // Renders the contents of the current folder as a grid
+    renderCurrentFolderGrid = () => {
+        if ( this.state.currentFolderContent == null ) return "";
+
+        return(
+            this.state.currentFolderContent.map((item) => {
+                return(
+                    <GridFileEntry
+                        onClick={() => {this.fsItemClicked(item.path)}}
+                        key={nextKey()}
+                    >
+                        <GridFileEntryImageContainer>
+                            <GridFileEntryImage src={(item.isFolder) ? imgFileExpFolder : imgFileExpFile} />
+                        </GridFileEntryImageContainer>
+
+                        <GridFileEntryInfoContainer>
+                            <b>{item.name}</b>
+                        </GridFileEntryInfoContainer>
+                    </GridFileEntry>
+                )
+            })
+        );
+    }
+
 
     render() {
         return(
@@ -175,20 +200,33 @@ export default class FileExplorer extends ManifestComponent {
                     </CurrentFolderContainer>
                 </TopBarContainer>
 
-                <FileContainer id={this.state.id + "__file-container"}>
-                    {this.renderCurrentFolder(this.state.currentFolder)}
+                <FileContainer
+                    id={this.state.id + "__file-container"}
+                    view={(this.isOptionChecked("view-grid")) ? "grid" : "list"}
+                >
+                    {
+                        this.isOptionChecked("view-grid")
+                        ? this.renderCurrentFolderGrid()
+                        : this.renderCurrentFolder()
+                    }
                 </FileContainer>
 
-                <PreviousFolderContainer onClick={() => this.moveBack(this.state.currentFolder)}>
-                    <PreviousFolderImage src={imgPreviousFolder} />
-                </PreviousFolderContainer>
+                {
+                    this.isOptionChecked("allow-move-back") &&
+                    <PreviousFolderContainer onClick={() => this.moveBack(this.state.currentFolder)}>
+                        <PreviousFolderImage src={imgPreviousFolder} />
+                    </PreviousFolderContainer>
+                }
 
-                <FolderSelectionButton onClick={() => { this.runComponentScriptArgs("onSelect", this.state.currentFolder) }}>
-                    <FolderSelectionButtonImageContainer>
-                        <FolderSelectionButtonImage src={imgSelectionCheckmark} />
-                    </FolderSelectionButtonImageContainer>
-                    <FolderSelectionTextContainer>Select</FolderSelectionTextContainer>
-                </FolderSelectionButton>
+                {
+                    this.isOptionChecked("render-select") &&
+                    <FolderSelectionButton onClick={() => { this.runComponentScriptArgs("onSelect", this.state.currentFolder) }}>
+                        <FolderSelectionButtonImageContainer>
+                            <FolderSelectionButtonImage src={imgSelectionCheckmark} />
+                        </FolderSelectionButtonImageContainer>
+                        <FolderSelectionTextContainer>Select</FolderSelectionTextContainer>
+                    </FolderSelectionButton>
+                }
 
                 {
                     this.state.editModeEnabled &&
@@ -339,7 +377,7 @@ const FileContainer = styled.div`
     position: relative;
     left: 32px;
     top: 18%;
-    width: calc(50% - 32px);
+    width: calc(${props => (props.view === "list") ? "50% - 32px" : "100% - 64px"});
     height: 76%;
     overflow: auto;
 
@@ -396,4 +434,51 @@ const EditOutlineContainer = styled.div`
     top: 0px;
     right: 0px;
     bottom: 0px;
+`;
+
+const GridFileEntry = styled.div`
+    position: relative;
+    display: inline-block;
+    left: 16px;
+    top: 8px;
+    margin-left: 8px;
+    width: 128px;
+    height: 128px;
+
+    cursor: pointer;
+    border-radius: 8px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+`;
+
+const GridFileEntryImageContainer = styled.div`
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+`;
+
+const GridFileEntryImage = styled.img`
+    position: relative;
+    width: 40%;
+    height: 40%;
+`;
+
+const GridFileEntryInfoContainer = styled.div`
+    position: absolute;
+    text-align: center;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 20%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;

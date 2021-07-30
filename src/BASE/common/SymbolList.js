@@ -6,12 +6,12 @@ import SymbolElement from "./SymbolList/SymbolElement";
 import ManifestComponent from "../general/ManifestComponent";
 import EditOutline from "../general/Options/Edit/EditOutline";
 
+import imgBrush from "../assets/img_brush.svg";
+
 export default class SymbolList extends ManifestComponent {
     constructor(props) {
         super(props, jSymbolList);
     }
-
-
 
         // Adds an entry/entries to the symbol list
     addEntry = (ent) => {
@@ -23,8 +23,17 @@ export default class SymbolList extends ManifestComponent {
         });
     }
 
+        // Removes all entries from the symbol list
+    clearSymbolList = () => {
+        this.setState({
+            symbolData: []
+        }, () => {
+            this.saveConfiguration("onAddition");
+        })
+    }
+
         // Renders all the symbols provided to this symbol list.
-    renderSymbols() {
+    renderSymbols = () => {
         return(
             this.state.symbolData.map((symb) => {
                 return(
@@ -55,6 +64,10 @@ export default class SymbolList extends ManifestComponent {
                     }}
                 >
                     <Caption onClick={this.testtest}>
+                        <ClearListContainer onClick={this.clearSymbolList}>
+                            <FullImage src={imgBrush} />
+                        </ClearListContainer>
+
                         <b>{this.getModifiedState(this.state.caption)}</b>
                     </Caption>
 
@@ -138,4 +151,26 @@ const EditOutlineContainer = styled.div`
     top: 0px;
     right: 0px;
     bottom: 0px;
+`;
+
+const ClearListContainer = styled.div`
+    position: absolute;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 1;
+    }
+`;
+
+const FullImage = styled.img`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
 `;

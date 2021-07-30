@@ -145,3 +145,8 @@ focus is going to be on creating the minimum viable product that is capable of c
 repository with relative ease.
 <br></br>
 <br></br>
+
+## Saturday 31.7.2021
+Created a "Grid"-view for the FileExplorer. SymbolList's element's datapoints now have additional
+properties that allow a user to decide which of the points are displayed and which are left hidden, ready
+to be used by user-defined scripts.

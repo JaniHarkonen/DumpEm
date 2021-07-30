@@ -23,15 +23,18 @@ export default class SymbolElement extends React.Component {
         // Renders the datapoints that are visible on the element
     renderData = () => {
         let elems = [];
-
         let sd = this.props.symbolData.data;
         let s = Math.min(4, sd.length);
-        for( let i = 0; i < s; i++ )
+
+        for( let i = 0; ; i++ )
         {
+            if( i >= s ) break;
+            if( sd[i] == null || !sd[i].visible ) continue;
+
             elems.push(
                 <DataContainer key={nextKey()}>
                     <Data>
-                        {sd[i]}
+                        {sd[i].dataPoint}
                     </Data>
                 </DataContainer>
             );

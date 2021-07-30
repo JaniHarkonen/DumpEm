@@ -125,7 +125,13 @@
 
                     "scripts": {
                         "onSelect": "scrSelectFolder"
-                    }
+                    },
+
+                    "options": [
+                        "render-select",
+                        "allow-move",
+                        "allow-move-back"
+                    ]
                 }
             }
         ],
