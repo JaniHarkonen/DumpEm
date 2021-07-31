@@ -150,3 +150,7 @@ repository with relative ease.
 Created a "Grid"-view for the FileExplorer. SymbolList's element's datapoints now have additional
 properties that allow a user to decide which of the points are displayed and which are left hidden, ready
 to be used by user-defined scripts.
+<br></br>
+Repositories have now been re-structured to utilize folders. This will make it easier to remove components
+as they no longer need to be traversed to find and remove their subcomponents. THE MINIMUM VIABLE PRODUCT
+IS NOW COMPLETE!
