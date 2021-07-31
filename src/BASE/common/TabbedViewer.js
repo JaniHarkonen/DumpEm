@@ -52,16 +52,16 @@ export default class TabbedViewer extends ManifestComponent {
             options: ["add", "delete", "edit"]
         }
 
-        /*this.state.hostReference.addComponent(tab_h);
+        this.state.hostReference.addComponent(tab_h);
 
             // Add the new workspace to the configuration JSON of this component
         let config = readJson(this.state.config);
         config.attributes.workspaces = config.attributes.workspaces.concat(id);
-        writeJson(this.state.config, config);*/
+        writeJson(this.state.config, config);
 
             // Create a configuration .json for the added tab
         writeJson(cpath, { attributes: tab_c });
-        //this.setState({ workspaces: this.state.workspaces.concat(id) });
+        this.setState({ workspaces: this.state.workspaces.concat(id) });
     }
 
         // Updates the name of a workspace in the host component
