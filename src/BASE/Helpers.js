@@ -73,6 +73,14 @@ export const writeJson = (path, json) => {
     if( path == null ) return;
     if( json == null ) return;
 
+        // Create folder(s) if necessary
+    if( path.includes("\\") )
+    {
+        let dir = path.substring(0, path.lastIndexOf("\\"));
+        if( !fs.existsSync(getCurrentRepository() + dir) )
+        fs.mkdirSync(getCurrentRepository() + dir, { recursive: true });
+    }
+
     const file = getCurrentRepository() + path;
     const json_str = JSON.stringify(json, null, 4);
     fs.writeFileSync(file, json_str);
@@ -92,6 +100,7 @@ export const modifyJson = (path, json) => {
 
     let mod_attribs = { ...read_json.attributes, ...json };
     let mod_json = { ...read_json, ...{attributes: mod_attribs} };
+
     writeJson(path, mod_json);
 }
 

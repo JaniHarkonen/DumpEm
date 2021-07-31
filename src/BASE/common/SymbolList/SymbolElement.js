@@ -11,13 +11,16 @@ export default class SymbolElement extends React.Component {
 
         this.state = {
             symbolData: props.symbolData,
-            colorCode: props.symbolData.color
+            colorCode: props.symbolData.color,
+            hostReference: props.hostReference,
+            index: props.index
         }
     }
 
         // Updates the color code of this element
     updateColorCode = (code) => {
-        this.setState({ colorCode: code });
+        //this.setState({ colorCode: code });
+        this.state.hostReference.updateSymbol(this.state.index, { color: code });
     }
 
         // Renders the datapoints that are visible on the element

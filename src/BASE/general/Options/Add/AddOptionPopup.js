@@ -160,8 +160,7 @@ export default class AddOptionPopup extends React.Component {
         }
         
         attrib_cf.hostComponent = this.props.hostReference.getComponentId();
-
-        writeJson(attrib_h.config, { attributes: attrib_cf });
+        writeJson(this.props.hostReference.id.replaceAll("-", "\\") + "\\" + attrib_h.config, { attributes: attrib_cf });
 
             // Add the component to the host component
         this.props.hostReference.addComponent({

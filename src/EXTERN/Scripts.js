@@ -113,9 +113,9 @@ SCRIPTS.scrExtractSymbolData = () => {
 
 SCRIPTS.scrDeriveSymbolsFromList = (args) => {
     if( args == null || args.length < 3 ) return;
-    let arg_comp_src = args[0] || null;
-    let arg_comp_dest = args[1] || null;
-    let arg_excl = args[2] || null;
+    let arg_comp_src = args[0];
+    let arg_comp_dest = args[1];
+    let arg_excl = args[2];
 
     if( arg_excl == null ) return;
     let comp_src = getComponentById(arg_comp_src);

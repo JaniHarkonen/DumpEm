@@ -105,7 +105,9 @@ export var jSymbolList =
     symbolData: [],         // Ticker data assigned to the symbols displayed on this list
     savedFields: {
         ...jBasic.savedFields,
-        onAddition: ["symbolData"]
+        onAddition: ["symbolData"],
+        onClear: ["symbolData"],
+        onColorChange: ["symbolData"]
     }
 };
 

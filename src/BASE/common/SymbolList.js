@@ -28,18 +28,33 @@ export default class SymbolList extends ManifestComponent {
         this.setState({
             symbolData: []
         }, () => {
-            this.saveConfiguration("onAddition");
+            this.saveConfiguration("onClear");
+        })
+    }
+
+        // Updates the color code of a symbol and saves the changes
+    updateSymbol = (index, change) => {
+        let state = this.state.symbolData;
+        if( state[index] == null ) return;
+        
+        state[index] = { ...state[index], ...change };
+
+        this.setState({
+            symbolData: state
+        }, () => {
+            this.saveConfiguration("onColorChange");
         })
     }
 
         // Renders all the symbols provided to this symbol list.
     renderSymbols = () => {
         return(
-            this.state.symbolData.map((symb) => {
+            this.state.symbolData.map((symb, index) => {
                 return(
                     <SymbolElementContainer key={nextKey()}>
                         <SymbolElement
                             key={nextKey()}
+                            index={index}
                             symbolData={symb}
                             hostReference={this}
                         />
