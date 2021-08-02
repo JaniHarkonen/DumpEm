@@ -54,6 +54,9 @@ export default class FileExplorer extends ManifestComponent {
         if( e.keyCode !== 13 ) return;
 
         let infield = document.getElementById(this.state.id + "__current-folder-input");
+
+        if( this.state.rootFolder !== "" && !infield.value.includes(this.state.rootFolder) )
+        return;
         
         if( infield !== document.activeElement ) return;
         this.moveToFolder(infield.value);
@@ -90,7 +93,7 @@ export default class FileExplorer extends ManifestComponent {
         // Moves the explorer to a given folder (returns false upon fail, true upon success)
     moveToFolder = (path) => {
         if( path == null || path === "" ) return false;
-        if( !this.isOptionChecked("allow-move") ) return;
+        if( this.isOptionChecked("folder-lock") ) return;
 
         this.setState({
             currentFolder: path,
@@ -112,7 +115,7 @@ export default class FileExplorer extends ManifestComponent {
     fsItemClicked = (path) => {
         if( fs.lstatSync(path).isDirectory() )
         {
-            if( !this.isOptionChecked("folder-lock") ) this.moveToFolder(path);
+            this.moveToFolder(path);
         }
         else
         {
@@ -193,7 +196,7 @@ export default class FileExplorer extends ManifestComponent {
                             <CurrentFolderInput
                                 id={this.state.id + "__current-folder-input"}
                                 value={this.state.CURRENT_FOLDER_INPUT}
-                                onChange={(e) => {this.setState({CURRENT_FOLDER_INPUT: e.target.value})}}
+                                onChange={(e) => { this.setState({CURRENT_FOLDER_INPUT: e.target.value}) }}
                             />
                         </CurrentFolderInputContainer>
 
@@ -212,8 +215,11 @@ export default class FileExplorer extends ManifestComponent {
                 </FileContainer>
 
                 {
-                    this.isOptionChecked("allow-move-back") &&
-                    <PreviousFolderContainer onClick={() => this.moveBack(this.state.currentFolder)}>
+                    this.isOptionChecked("render-move-back") &&
+                    <PreviousFolderContainer
+                        onClick={() => this.moveBack(this.state.currentFolder)}
+                        view={(this.isOptionChecked("view-grid")) ? "grid" : "list"}
+                    >
                         <PreviousFolderImage src={imgPreviousFolder} />
                     </PreviousFolderContainer>
                 }
@@ -258,8 +264,8 @@ const Content = styled.div`
 
 const PreviousFolderContainer = styled.div`
     position: absolute;
-    left: calc(50% + 16px);
-    top: 18%;
+    ${props => (props.view === "list") ? "left: calc(50% + 16px)" : "right: 16px"};
+    top: ${props => (props.view === "list") ? "18%" : "16px"};
     width: 42px;
     height: 32px;
 

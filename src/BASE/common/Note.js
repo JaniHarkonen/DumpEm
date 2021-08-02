@@ -7,17 +7,41 @@ import EditOutline from "../general/Options/Edit/EditOutline";
 export default class Note extends ManifestComponent {
     constructor(props) {
         super(props, jNote);
+
+        this.state.hasChanged = false;
+    }
+
+        // Handles saving
+    handleSaveShortcut = (e) => {
+        if( e.ctrlKey && e.key === "s" )
+        {
+            this.runComponentScript("onShortcutSave");
+            this.saveConfiguration("onShortcutSave");
+            
+            this.setState({ hasChanged: false });
+        }
+    }
+        // Subscribe to the save listener
+    componentDidMount() {
+        super.componentDidMount();
+        if( this.isOptionChecked("shortcut-save") )
+        document.addEventListener("keydown", this.handleSaveShortcut);
+    }
+
+        // Unsubscribes from the save listener
+    componentWillUnmount() {
+        super.componentWillUnmount();
+        document.removeEventListener("keydown", this.handleSaveShortcut);
     }
 
         // Updates the content of the note based on input
     updateNoteContent = (e) => {
-        this.setState({ content: e.target.value })
-    }
-
-        // Stores the potentially updated input of the note in its host component
-    componentWillUnmount() {
-        super.componentWillUnmount();
-        this.saveConfiguration("onUnmount");
+        this.setState({
+            content: e.target.value,
+            hasChanged: true
+        }, () => {
+            this.runComponentScript("onChange");
+        });
     }
 
     render() {
@@ -41,7 +65,9 @@ export default class Note extends ManifestComponent {
                             fontSize: this.getModifiedState(this.state.fontSize),
                             backgroundColor: 
                                             (this.isOptionChecked("no-background"))
-                                            ? "transparent"
+                                            ? (this.isOptionChecked("show-change") && this.state.hasChanged)
+                                                ? "#FFF8D6"
+                                                : "transparent"
                                             : this.getModifiedState(this.state.color) || "#FFF5C6"
                         }}
                         onChange={this.updateNoteContent}

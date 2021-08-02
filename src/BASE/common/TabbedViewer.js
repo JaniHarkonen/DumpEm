@@ -162,10 +162,13 @@ export default class TabbedViewer extends ManifestComponent {
                         <LabelContainer>
                             {this.renderLabels()}
 
-                            <TabOptionContainer onClick={this.handleTabAddition}>
-                                <AddTabBackground />
-                                <FullImage src={imgAdd} />
-                            </TabOptionContainer>
+                            {
+                                this.isOptionChecked("add") &&
+                                <TabOptionContainer onClick={this.handleTabAddition}>
+                                    <AddTabBackground />
+                                    <FullImage src={imgAdd} />
+                                </TabOptionContainer>
+                            }
 
                             <TabOptionContainer>
                                 <DuplicateTabImageContainer>

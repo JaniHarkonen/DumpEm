@@ -129,8 +129,7 @@
 
                     "options": [
                         "render-select",
-                        "allow-move",
-                        "allow-move-back"
+                        "render-move-back"
                     ]
                 }
             }

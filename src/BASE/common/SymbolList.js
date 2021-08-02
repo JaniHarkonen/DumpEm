@@ -11,6 +11,8 @@ import imgBrush from "../assets/img_brush.svg";
 export default class SymbolList extends ManifestComponent {
     constructor(props) {
         super(props, jSymbolList);
+
+        this.state.selectedSymbol = -1;
     }
 
         // Adds an entry/entries to the symbol list
@@ -46,6 +48,21 @@ export default class SymbolList extends ManifestComponent {
         })
     }
 
+        // Called upon clicking a symbol in the list
+    handleSymbolClick = (index) => {
+        if( this.isOptionChecked("allow-select") )
+        {
+            this.setState( { 
+                selectedSymbol: index
+            }, () => {
+                this.runComponentScriptArgs("onSymbolClick", this.state.symbolData[index]);
+            })
+        }
+        else
+        this.runComponentScriptArgs("onSymbolClick", this.state.symbolData[index]);
+        
+    }
+
         // Renders all the symbols provided to this symbol list.
     renderSymbols = () => {
         return(
@@ -57,6 +74,7 @@ export default class SymbolList extends ManifestComponent {
                             index={index}
                             symbolData={symb}
                             hostReference={this}
+                            isSelected={(this.state.selectedSymbol === index)}
                         />
                     </SymbolElementContainer>
                 );

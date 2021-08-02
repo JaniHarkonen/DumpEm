@@ -161,4 +161,38 @@ export default class BaseComponent extends React.Component {
         if( this.props.attributes.id != null ) return this.props.attributes.id;
         else return id.substring(id.lastIndexOf("-") + 1, id.length);
     }
+
+        // Sets a variable to a given value
+    setVariable = (vari, val, save = false) => {
+        this.setState({
+            variables: {
+                ...this.state.variables,
+                [vari]: val
+            }
+        }, () => {
+            if( save )
+            this.saveConfiguration(vari + "__onChange");
+        });
+    }
+
+        // Sets multiple variables
+    setVariableMultiple = (vardata, save = false, callb) => {
+        this.setState({
+            variables: {
+                ...this.state.variables,
+                ...vardata
+            }
+        }, () => {
+            if( save )
+            this.saveConfiguration("onVariableChange");
+
+            if( callb != null )
+            callb();
+        })
+    }
+
+        // Returns the value held by a given variable
+    getVariable = (vari) => {
+        return this.state.variables[vari];
+    }
 }

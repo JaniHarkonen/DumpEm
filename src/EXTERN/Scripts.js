@@ -6,7 +6,8 @@
 */
 
 import { getComponentById } from "../BASE/ComponentRegistry";
-import { modifyJsonVanilla, readJson, setCurrentRepository } from "../BASE/Helpers";
+import { getCurrentRepository, modifyJsonVanilla, readJson, setCurrentRepository, writeJson } from "../BASE/Helpers";
+import { jNote } from "../BASE/Jsons";
 const fs = window.require("fs");
 
 
@@ -59,7 +60,7 @@ SCRIPTS.scrSelectMostRecent = () => {
 }
 
 SCRIPTS.scrExtractSymbolData = () => {
-    let comp = getComponentById("workspace_2021__1-ws_tab__1627239518953-symbol_list__1627245422733");
+    let comp = getComponentById("workspace_2021__1-ws_tab__1627743968758-sl_filter_volume");
     if( comp == null ) return;
 
     if( comp == null || comp.state.symbolData.length > 0 ) return;
@@ -127,15 +128,115 @@ SCRIPTS.scrDeriveSymbolsFromList = (args) => {
 
     let symbols = [];
     for( let s of comp_src.state.symbolData )
-    if( s.color !== arg_excl ) symbols.push({ data: s.data, color: null });
+    if( s.color === arg_excl ) symbols.push({ data: s.data, color: null });
 
     comp_dest.addEntry(symbols);
 }
 
-SCRIPTS.scrGetFirstPhaseSymbols = () => {
+SCRIPTS.scrGetVolumeFilteredSymbols = () => {
     SCRIPTS.scrDeriveSymbolsFromList([
-        "workspace_2021__1-ws_tab__1627239518953-symbol_list__1627245422733",
-        "workspace_2021__1-ws_tab__1627239838495-symbol_list__1627663811781",
+        "workspace_2021__1-ws_tab__1627743968758-sl_filter_volume",
+        "workspace_2021__1-ws_tab__1627744203469-sl_filter_priceaction",
         "#93FF66"
     ]);
+}
+
+SCRIPTS.scrGetPriceActionFilteredSymbols = () => {
+    SCRIPTS.scrDeriveSymbolsFromList([
+        "workspace_2021__1-ws_tab__1627744203469-sl_filter_priceaction",
+        "workspace_2021__1-ws_tab__1627744209151-sl_filter_ta1",
+        "#93FF66"
+    ]);
+}
+
+SCRIPTS.scrGetPriceTA1FilteredSymbols = () => {
+    SCRIPTS.scrDeriveSymbolsFromList([
+        "workspace_2021__1-ws_tab__1627744209151-sl_filter_ta1",
+        "workspace_2021__1-ws_tab__1627744210262-sl_finalpicks",
+        "#93FF66"
+    ]);
+}
+
+SCRIPTS.scrOpenAnalyses = (symbol) => {
+    let fname = symbol.data[2].dataPoint + ".json";
+    if( !fs.existsSync(getCurrentRepository() + fname) )
+    {
+        writeJson(fname, {
+            technical: "",
+            fundamental: "",
+            consensus: "",
+            file: fname
+        });
+    }
+
+    let analyses = readJson(fname);
+    let ws = "workspace_2021__1-ws_tab__1627744210262-";
+    let sl = getComponentById(ws + "sl_finalpicks");
+
+    let c_ta = getComponentById(ws + "ws_tab__1627745308867-n_analysis_technical");
+    let c_fa = getComponentById(ws + "ws_tab__1627745309549-n_analysis_fundamental");
+    let c_ca = getComponentById(ws + "ws_tab__1627745310104-n_analysis_consensus");
+
+    sl.setVariableMultiple({
+        analysisFile: analyses.file
+    }, false,
+    () => {
+        if( c_ta != null ) c_ta.setState({ content: analyses.technical });
+        if( c_fa != null ) c_fa.setState({ content: analyses.fundamental });
+        if( c_ca != null ) c_ca.setState({ content: analyses.consensus });
+    });
+}
+
+    // Fetches the technical analysis of the currently open symbol
+SCRIPTS.scrGetOpenTA = () => {
+    let c_ta = getComponentById("workspace_2021__1-ws_tab__1627744210262-ws_tab__1627745308867-n_analysis_technical");
+    let sl = getComponentById("workspace_2021__1-ws_tab__1627744210262-sl_finalpicks");
+
+    if( c_ta != null && sl != null )
+    c_ta.state.content = readJson(sl.getVariable("analysisFile")).technical;
+}
+
+    // Fetches the fundamental analysis of the currently open symbol
+SCRIPTS.scrGetOpenFA = () => {
+    let c_fa = getComponentById("workspace_2021__1-ws_tab__1627744210262-ws_tab__1627745309549-n_analysis_fundamental");
+    let sl = getComponentById("workspace_2021__1-ws_tab__1627744210262-sl_finalpicks");
+
+    if( c_fa != null && sl != null )
+    c_fa.state.content = readJson(sl.getVariable("analysisFile")).fundamental;
+}
+
+    // Fetches the consensus analysis of the currently open symbol
+SCRIPTS.scrGetOpenCA = () => {
+    let c_ca = getComponentById("workspace_2021__1-ws_tab__1627744210262-ws_tab__1627745310104-n_analysis_consensus");
+    let sl = getComponentById("workspace_2021__1-ws_tab__1627744210262-sl_finalpicks");
+
+    if( c_ca != null && sl != null )
+    c_ca.state.content = readJson(sl.getVariable("analysisFile")).consensus;
+}
+
+    // Saves the technical analysis for the currently open symbol to its analysis file
+SCRIPTS.scrSaveOpenTA = () => {
+    let c_ta = getComponentById("workspace_2021__1-ws_tab__1627744210262-ws_tab__1627745308867-n_analysis_technical");
+    let sl = getComponentById("workspace_2021__1-ws_tab__1627744210262-sl_finalpicks");
+
+    if( c_ta != null && sl != null )
+    modifyJsonVanilla(sl.getVariable("analysisFile"), { technical: c_ta.state.content });
+}
+
+    // Saves the fundamental analysis for the currently open symbol to its analysis file
+SCRIPTS.scrSaveOpenFA = () => {
+    let c_fa = getComponentById("workspace_2021__1-ws_tab__1627744210262-ws_tab__1627745309549-n_analysis_fundamental");
+    let sl = getComponentById("workspace_2021__1-ws_tab__1627744210262-sl_finalpicks");
+
+    if( c_fa != null && sl != null )
+    modifyJsonVanilla(sl.getVariable("analysisFile"), { fundamental: c_fa.state.content });
+}
+
+    // Saves the consensus analysis for the currently open symbol to its analysis file
+SCRIPTS.scrSaveOpenCA = () => {
+    let c_ca = getComponentById("workspace_2021__1-ws_tab__1627744210262-ws_tab__1627745310104-n_analysis_consensus");
+    let sl = getComponentById("workspace_2021__1-ws_tab__1627744210262-sl_finalpicks");
+
+    if( c_ca != null && sl != null )
+    modifyJsonVanilla(sl.getVariable("analysisFile"), { consensus: c_ca.state.content });
 }

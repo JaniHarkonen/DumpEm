@@ -154,3 +154,12 @@ to be used by user-defined scripts.
 Repositories have now been re-structured to utilize folders. This will make it easier to remove components
 as they no longer need to be traversed to find and remove their subcomponents. THE MINIMUM VIABLE PRODUCT
 IS NOW COMPLETE!
+<br></br>
+<br></br>
+
+## Monday 2.8.2021
+Creating the actual DumpEm market analysis program is now coming to a close. The elements of the SymbolList
+still need a button for opening their TradingView link to conclude the list of features that will be added
+to this version - alpha. So far, a number of tweaks and small additions have been made to the existing
+components to allow DumpEm to be built. These changes are likely to be the final ones for the immediate
+future, however many features still remain to be added.

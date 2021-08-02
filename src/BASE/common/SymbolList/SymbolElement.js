@@ -19,7 +19,6 @@ export default class SymbolElement extends React.Component {
 
         // Updates the color code of this element
     updateColorCode = (code) => {
-        //this.setState({ colorCode: code });
         this.state.hostReference.updateSymbol(this.state.index, { color: code });
     }
 
@@ -50,11 +49,12 @@ export default class SymbolElement extends React.Component {
         return(
             <>
                 <Content
-                    /*onClick={() => { window.open(this.props.symbolData.tradingViewLink) }}*/
+                    onClick={() => { this.props.hostReference.handleSymbolClick(this.state.index); }}
                     code={this.state.colorCode || "#D3D3D3"}
                     style={{ zIndex: (this.state.dropDownOpen) ? 2 : 0 }}
                 >
                     {this.renderData()}
+                    <SelectionOverlay style={{ display: this.props.isSelected ? "block" : "none" }} />
 
                 </Content>
 
@@ -109,6 +109,19 @@ const ColorCodePickerContainer = styled.div`
     top: 0px;
     width: 24px;
     height: 24px;
+`;
+
+const SelectionOverlay = styled.div`
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+
+    background-color: rgba(0, 0, 0, 0.18);
+    border-radius: 12px;
+    border-style: dashed;
+    border-width: 1px;
 `;
 
 /*const ChartButton = styled.div`

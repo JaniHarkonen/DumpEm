@@ -113,6 +113,8 @@ export const modifyJson = (path, json) => {
             json    - JSON to modify the file with.
 */
 export const modifyJsonVanilla = (path, json) => {
+    if( path == null || path === "" ) return;
+
     let read_json = readJson(path);
     if( read_json == null ) return;
 
