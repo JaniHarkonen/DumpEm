@@ -7,7 +7,6 @@
 
 import { getComponentById } from "../BASE/ComponentRegistry";
 import { getCurrentRepository, modifyJsonVanilla, readJson, setCurrentRepository, writeJson } from "../BASE/Helpers";
-import { jNote } from "../BASE/Jsons";
 const fs = window.require("fs");
 
 
@@ -59,6 +58,7 @@ SCRIPTS.scrSelectMostRecent = () => {
     root.reloadConfiguration();
 }
 
+    // Extracts symbol data from Kauppalehti
 SCRIPTS.scrExtractSymbolData = () => {
     let comp = getComponentById("workspace_2021__1-ws_tab__1627743968758-sl_filter_volume");
     if( comp == null ) return;
@@ -112,6 +112,8 @@ SCRIPTS.scrExtractSymbolData = () => {
     }
 }
 
+    // Copies elements from a symbol list to another excluding all
+    // symbols that do NOT have the color provided in 'args'.
 SCRIPTS.scrDeriveSymbolsFromList = (args) => {
     if( args == null || args.length < 3 ) return;
     let arg_comp_src = args[0];
@@ -133,6 +135,7 @@ SCRIPTS.scrDeriveSymbolsFromList = (args) => {
     comp_dest.addEntry(symbols);
 }
 
+    // Copies elements from the Volume- filter
 SCRIPTS.scrGetVolumeFilteredSymbols = () => {
     SCRIPTS.scrDeriveSymbolsFromList([
         "workspace_2021__1-ws_tab__1627743968758-sl_filter_volume",
@@ -141,6 +144,7 @@ SCRIPTS.scrGetVolumeFilteredSymbols = () => {
     ]);
 }
 
+    // Copies elements from the Price Action- filter
 SCRIPTS.scrGetPriceActionFilteredSymbols = () => {
     SCRIPTS.scrDeriveSymbolsFromList([
         "workspace_2021__1-ws_tab__1627744203469-sl_filter_priceaction",
@@ -149,6 +153,7 @@ SCRIPTS.scrGetPriceActionFilteredSymbols = () => {
     ]);
 }
 
+    // Copies elements from the TA #1- filter
 SCRIPTS.scrGetPriceTA1FilteredSymbols = () => {
     SCRIPTS.scrDeriveSymbolsFromList([
         "workspace_2021__1-ws_tab__1627744209151-sl_filter_ta1",
@@ -157,6 +162,8 @@ SCRIPTS.scrGetPriceTA1FilteredSymbols = () => {
     ]);
 }
 
+    // Creates an analysis file for a symbol if it doesnt exist and
+    // loads the analysis data into appropriate notes
 SCRIPTS.scrOpenAnalyses = (symbol) => {
     let fname = symbol.data[2].dataPoint + ".json";
     if( !fs.existsSync(getCurrentRepository() + fname) )

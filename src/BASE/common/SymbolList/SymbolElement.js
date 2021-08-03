@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { nextKey } from "../../Classes";
 import ColorCodePicker from "./ColorCodePicker";
 
-//import imgChart from "../../assets/img_chart.svg";
+import imgChart from "../../assets/img_chart.svg";
 
 export default class SymbolElement extends React.Component {
     constructor(props) {
@@ -13,13 +13,24 @@ export default class SymbolElement extends React.Component {
             symbolData: props.symbolData,
             colorCode: props.symbolData.color,
             hostReference: props.hostReference,
-            index: props.index
+            index: props.index,
+            showLink: props.showLink,
+            LINK_INDEX: 2
         }
     }
 
         // Updates the color code of this element
     updateColorCode = (code) => {
         this.state.hostReference.updateSymbol(this.state.index, { color: code });
+    }
+
+        // Called upon opening the link to the symbol
+    handleLinkOpen = () => {
+        window.require("electron")
+        .shell.openExternal(
+            "https://www.tradingview.com/chart/?symbol=" +
+            this.state.symbolData.data[this.state.LINK_INDEX].dataPoint
+        );
     }
 
         // Renders the datapoints that are visible on the element
@@ -56,6 +67,14 @@ export default class SymbolElement extends React.Component {
                     {this.renderData()}
                     <SelectionOverlay style={{ display: this.props.isSelected ? "block" : "none" }} />
 
+                    {
+                        this.state.showLink &&
+                        <ChartButton onClick={this.handleLinkOpen}>
+                            <ChartImageContainer>
+                                <FullImage src={imgChart} />
+                            </ChartImageContainer>
+                        </ChartButton>
+                    }
                 </Content>
 
                 <ColorCodePickerContainer>
@@ -124,16 +143,23 @@ const SelectionOverlay = styled.div`
     border-width: 1px;
 `;
 
-/*const ChartButton = styled.div`
+const ChartButton = styled.div`
     position: absolute;
-    right: 0px;
-    bottom: 0px;
+    right: 3px;
+    bottom: 3px;
     width: 8.25%;
     height: 50%;
 
-    background-color: gray;
-    border-bottom-right-radius: 12px;
+    background-color: white;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
     cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
 `;
 
 const ChartImageContainer = styled.div`
@@ -150,4 +176,4 @@ const FullImage = styled.img`
     top: 0px;
     width: 100%;
     height: 100%;
-`;*/
+`;

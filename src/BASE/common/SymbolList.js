@@ -75,6 +75,7 @@ export default class SymbolList extends ManifestComponent {
                             symbolData={symb}
                             hostReference={this}
                             isSelected={(this.state.selectedSymbol === index)}
+                            showLink={this.isOptionChecked("render-link")}
                         />
                     </SymbolElementContainer>
                 );
