@@ -1,3 +1,51 @@
+# ALPHA RELEASE
+**Tuesday 3.8.2021** - DumpEm as well as the workspace-based engine that's running it is now ready,
+concluding the development for the alpha version (V0.1.0).
+<br></br>
+<br></br>
+
+## Developer's comments
+DumpEm's engine is still missing some features that are required for a better user experience, for example
+the ability to modify existing components. Right now, the only way to edit components, aside from moving
+and resizing, is to modify their configuration files which can be tedious in a repository with vast number
+of nested components. However, the minimum number of features required for me to create the DumpEm
+investment analysis program has been reached, and thus further development will become less frequent.
+<br></br>
+There are many inefficiencies and a great deal of messiness present in the code due to React, which seems
+to be less fitted for a program that is as complex in nature as the DumpEm engine; complexity that mainly
+arises from the nesting of components and the need to transfer information non-linearly across them. It is
+for this reason, that I'm considering to re-write the whole engine from scratch using JavaScript only. This
+will require me to, essentially, create my own framework for handling component rendering which, though 
+potentially a large undertaking, would give the engine some performance improvements as well as make the 
+development easier not having to worry about components' states.
+<br></br>
+Whether a re-write is necessary remains to be seen. However, there are still structural features that need
+to be implemented, such as, having the engine require scripts from a "Scripts.js" file in the repository
+through the "Scripts.js" file in the "EXTERN"- directory. Not only would this allow programmers to separate
+their custom scripts from the ones provided by the engine, but it'd also be mandatory when dealing with
+multiple repositories that implement different sets of scripts. Right now, programmers will have to append
+their scripts to the "Scripts.js" file in "EXTERN", creating a massive mess and, eventually, naming
+conflicts.
+
+## DumpEm features
+- ability to choose a repository or to access the most recent one
+- ability to add components to a workspace
+- ability to remove components from a workspace (incomplete)
+- ability to move and resize components
+- custom scripts
+- component variables
+- external assets
+
+- following components are supported:
+    - Workspace (ws)
+    - Tabbed viewer (tv)
+    - File explorer (fe)
+    - Symbol list (sl)
+    - Note (n)
+    - Button (btn)
+    - Image (img)
+    - Text (t)
+
 # TASK LIST
 Alpha V0.1.2 has been released!
 
@@ -152,52 +200,3 @@ components to allow DumpEm to be built. These changes are likely to be the final
 future, however many features still remain to be added.
 <br></br>
 <br></br>
-
-# ALPHA RELEASE
-**Tuesday 3.8.2021** - DumpEm as well as the workspace-based engine that's running it is now ready,
-concluding the development for the alpha version (V0.1.0).
-<br></br>
-<br></br>
-
-## Developer's comments
-DumpEm's engine is still missing some features that are required for a better user experience, for example
-the ability to modify existing components. Right now, the only way to edit components, aside from moving
-and resizing, is to modify their configuration files which can be tedious in a repository with vast number
-of nested components. However, the minimum number of features required for me to create the DumpEm
-investment analysis program has been reached, and thus further development will become less frequent.
-<br></br>
-There are many inefficiencies and a great deal of messiness present in the code due to React, which seems
-to be less fitted for a program that is as complex in nature as the DumpEm engine; complexity that mainly
-arises from the nesting of components and the need to transfer information non-linearly across them. It is
-for this reason, that I'm considering to re-write the whole engine from scratch using JavaScript only. This
-will require me to, essentially, create my own framework for handling component rendering which, though 
-potentially a large undertaking, would give the engine some performance improvements as well as make the 
-development easier not having to worry about components' states.
-<br></br>
-Whether a re-write is necessary remains to be seen. However, there are still structural features that need
-to be implemented, such as, having the engine require scripts from a "Scripts.js" file in the repository
-through the "Scripts.js" file in the "EXTERN"- directory. Not only would this allow programmers to separate
-their custom scripts from the ones provided by the engine, but it'd also be mandatory when dealing with
-multiple repositories that implement different sets of scripts. Right now, programmers will have to append
-their scripts to the "Scripts.js" file in "EXTERN", creating a massive mess and, eventually, naming
-conflicts.
-
-## DumpEm features
-- ability to choose a repository or to access the most recent one
-- ability to add components to a workspace
-- ability to remove components from a workspace (incomplete)
-- ability to move and resize components
-- custom scripts
-- component variables
-- external assets
-
-<br></br>
-- following components are supported:
-    - Workspace (ws)
-    - Tabbed viewer (tv)
-    - File explorer (fe)
-    - Symbol list (sl)
-    - Note (n)
-    - Button (btn)
-    - Image (img)
-    - Text (t)
