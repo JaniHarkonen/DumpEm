@@ -1,5 +1,5 @@
 # TASK LIST
-Alpha V0.1.0 has been released!
+Alpha V0.1.2 has been released!
 
 # CHANGE LOG
 

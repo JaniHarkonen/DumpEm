@@ -44,6 +44,17 @@ export default class Note extends ManifestComponent {
         });
     }
 
+        // Returns appropriate background color for the note
+    determineNoteColor = () => {
+        if( this.isOptionChecked("show-change") && this.state.hasChanged )
+        return "#FFF8D6";
+
+        if( this.isOptionChecked("no-background") )
+        return "transparent";
+
+        return this.getModifiedState(this.state.color) || "#FFF5C6";
+    }
+
     render() {
         return(
             <>
@@ -63,12 +74,12 @@ export default class Note extends ManifestComponent {
                         style={{
                             fontFamily: this.getModifiedState(this.state.font),
                             fontSize: this.getModifiedState(this.state.fontSize),
-                            backgroundColor: 
-                                            (this.isOptionChecked("no-background"))
+                            backgroundColor: this.determineNoteColor()
+                                            /*(this.isOptionChecked("no-background"))
                                             ? (this.isOptionChecked("show-change") && this.state.hasChanged)
                                                 ? "#FFF8D6"
                                                 : "transparent"
-                                            : this.getModifiedState(this.state.color) || "#FFF5C6"
+                                            : this.getModifiedState(this.state.color) || "#FFF5C6"*/
                         }}
                         onChange={this.updateNoteContent}
                         value={this.state.content || ""}
