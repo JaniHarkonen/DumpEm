@@ -26,6 +26,7 @@ their custom scripts from the ones provided by the engine, but it'd also be mand
 multiple repositories that implement different sets of scripts. Right now, programmers will have to append
 their scripts to the "Scripts.js" file in "EXTERN", creating a massive mess and, eventually, naming
 conflicts.
+<br></br>
 
 ## DumpEm features
 - ability to choose a repository or to access the most recent one
