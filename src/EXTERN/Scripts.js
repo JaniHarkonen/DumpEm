@@ -130,7 +130,8 @@ SCRIPTS.scrDeriveSymbolsFromList = (args) => {
 
     let symbols = [];
     for( let s of comp_src.state.symbolData )
-    if( s.color === arg_excl ) symbols.push({ data: s.data, color: null });
+    if( s.color === arg_excl || arg_excl.includes("," + s.color + ",") )
+    symbols.push({ data: s.data, color: null });
 
     comp_dest.addEntry(symbols);
 }
@@ -149,7 +150,7 @@ SCRIPTS.scrGetPriceActionFilteredSymbols = () => {
     SCRIPTS.scrDeriveSymbolsFromList([
         "workspace_2021__1-ws_tab__1627744203469-sl_filter_priceaction",
         "workspace_2021__1-ws_tab__1627744209151-sl_filter_ta1",
-        "#93FF66"
+        ",#93FF66, ,#93A3FF, ,#FFBB8E, ,#7FC9FF,"
     ]);
 }
 
@@ -158,7 +159,7 @@ SCRIPTS.scrGetPriceTA1FilteredSymbols = () => {
     SCRIPTS.scrDeriveSymbolsFromList([
         "workspace_2021__1-ws_tab__1627744209151-sl_filter_ta1",
         "workspace_2021__1-ws_tab__1627744210262-sl_finalpicks",
-        "#93FF66"
+        ",#93FF66, ,#93A3FF, ,#FFBB8E, ,#7FC9FF,"
     ]);
 }
 
