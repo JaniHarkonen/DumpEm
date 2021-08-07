@@ -1,4 +1,4 @@
-# ALPHA RELEASE (current: V0.1.4)
+# ALPHA RELEASE (current: V0.1.5)
 **Tuesday 3.8.2021** - DumpEm as well as the workspace-based engine that's running it is now ready,
 concluding the development for the alpha version (V0.1.0).
 <br></br>
@@ -48,7 +48,7 @@ conflicts.
     - Text (t)
 
 # TASK LIST
-Alpha V0.1.4 has been released!
+Alpha V0.1.5 has been released!
 
 # CHANGE LOG
 
