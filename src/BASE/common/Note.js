@@ -9,6 +9,7 @@ export default class Note extends ManifestComponent {
         super(props, jNote);
 
         this.state.hasChanged = false;
+        this.state.selectionPosition = -1;
     }
 
         // Handles key presses and shortcuts
@@ -36,13 +37,20 @@ export default class Note extends ManifestComponent {
             // Handle tabs
         if( e.key === "Tab" )
         {
-            let newstr = elem_ta.value.substring(0, elem_ta.selectionStart);
+            let newstr = elem_ta.value.substring(0, elem_ta.selectionStart) +
+                         "\t" +
+                         elem_ta.value.substring(elem_ta.selectionEnd);
+            let insize = this.state.indentSize;
+            let cursorpos = elem_ta.selectionStart + "\t".length;
 
-            for( let i = 0; i < this.state.indentSize; i++ )
-            newstr += " ";
-
-            newstr += elem_ta.value.substring(elem_ta.selectionEnd);
-            this.setState({ content: newstr });
+            this.setState({
+                content: newstr,
+                selectionPosition: elem_ta.selectionStart + insize
+            }, () => {
+                let elem_new_ta = document.getElementById(this.state.id + "__textarea");
+                elem_new_ta.selectionStart = cursorpos;
+                elem_new_ta.selectionEnd = cursorpos;
+            });
         }
     }
     
@@ -50,6 +58,12 @@ export default class Note extends ManifestComponent {
     componentDidMount() {
         super.componentDidMount();
         document.addEventListener("keydown", this.handleKeyPresses);
+
+        /*console.log("note monut")
+
+        let selpos = this.state.selectionPosition;
+        if( selpos >= 0 )
+        document.getElementById(this.state.id + "__textarea").selectionStart = selpos;*/
     }
 
         // Unsubscribes from the save listener
@@ -99,7 +113,8 @@ export default class Note extends ManifestComponent {
                         style={{
                             fontFamily: this.getModifiedState(this.state.font),
                             fontSize: this.getModifiedState(this.state.fontSize),
-                            backgroundColor: this.determineNoteColor()
+                            backgroundColor: this.determineNoteColor(),
+                            tabSize: this.state.indentSize
                         }}
                         onChange={this.updateNoteContent}
                         value={this.state.content || ""}
