@@ -122,7 +122,9 @@ export var jNote =
     class: "note",
     font: "Arial",          // Name of the font family the note text will be drawn in
     fontSize: "16px",       // Height of the font in pixels
-    content: ""             // The text content of the note
+    content: "",            // The text content of the note
+    color: "#FFF5C6",       // Default background color of the note (if the background is drawn)
+    indentSize: 4           // Number of indentations when pressing tab
 };
 
 /*

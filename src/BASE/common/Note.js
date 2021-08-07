@@ -11,27 +11,51 @@ export default class Note extends ManifestComponent {
         this.state.hasChanged = false;
     }
 
-        // Handles saving
-    handleSaveShortcut = (e) => {
-        if( e.ctrlKey && e.key === "s" )
+        // Handles key presses and shortcuts
+    handleKeyPresses = (e) => {
+        let elem_ta = document.getElementById(this.state.id + "__textarea");
+
+            // Only capture key presses if the text area is focused on
+        if( document.activeElement !== elem_ta ) return;
+
+            // Handle shortcuts
+        if( e.ctrlKey )
         {
-            this.runComponentScript("onShortcutSave");
-            this.saveConfiguration("onShortcutSave");
-            
-            this.setState({ hasChanged: false });
+                // SHORTUCT: save
+            if( e.key === "s" )
+            {
+                if( !this.isOptionChecked("shortcut-save") ) return;
+
+                this.runComponentScript("onShortcutSave");
+                this.saveConfiguration("onShortcutSave");
+                
+                this.setState({ hasChanged: false });
+            }
+        }
+
+            // Handle tabs
+        if( e.key === "Tab" )
+        {
+            let newstr = elem_ta.value.substring(0, elem_ta.selectionStart);
+
+            for( let i = 0; i < this.state.indentSize; i++ )
+            newstr += " ";
+
+            newstr += elem_ta.value.substring(elem_ta.selectionEnd);
+            this.setState({ content: newstr });
         }
     }
+    
         // Subscribe to the save listener
     componentDidMount() {
         super.componentDidMount();
-        if( this.isOptionChecked("shortcut-save") )
-        document.addEventListener("keydown", this.handleSaveShortcut);
+        document.addEventListener("keydown", this.handleKeyPresses);
     }
 
         // Unsubscribes from the save listener
     componentWillUnmount() {
         super.componentWillUnmount();
-        document.removeEventListener("keydown", this.handleSaveShortcut);
+        document.removeEventListener("keydown", this.handleKeyPresses);
     }
 
         // Updates the content of the note based on input
@@ -71,15 +95,11 @@ export default class Note extends ManifestComponent {
                     onClick={this.testtest}
                 >
                     <NoteInput
+                        id={this.state.id + "__textarea"}
                         style={{
                             fontFamily: this.getModifiedState(this.state.font),
                             fontSize: this.getModifiedState(this.state.fontSize),
                             backgroundColor: this.determineNoteColor()
-                                            /*(this.isOptionChecked("no-background"))
-                                            ? (this.isOptionChecked("show-change") && this.state.hasChanged)
-                                                ? "#FFF8D6"
-                                                : "transparent"
-                                            : this.getModifiedState(this.state.color) || "#FFF5C6"*/
                         }}
                         onChange={this.updateNoteContent}
                         value={this.state.content || ""}
